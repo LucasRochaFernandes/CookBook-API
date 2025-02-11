@@ -14,16 +14,16 @@ public class User
 
     [StringLength(50)]
     [NotNull]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [StringLength(50)]
     [EmailAddress]
     [NotNull]
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 
     [StringLength(2000)]
     [NotNull]
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 
     [NotNull]
     [DefaultValue(true)]

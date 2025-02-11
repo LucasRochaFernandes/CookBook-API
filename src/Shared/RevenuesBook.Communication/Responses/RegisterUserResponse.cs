@@ -3,5 +3,5 @@
 namespace RevenuesBook.Communication.Responses;
 public sealed record RegisterUserResponse(
     [Required]
-    string UserId
+    Guid UserId
     );
