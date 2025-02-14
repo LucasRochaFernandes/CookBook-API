@@ -3,6 +3,8 @@ using RevenuesBook.API.Middlewares;
 using RevenuesBook.Application;
 using RevenuesBook.Communication;
 using RevenuesBook.Infra;
+using RevenuesBook.Infra.Extensions;
+using RevenuesBook.Infra.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,4 +34,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+MigrateDatabase();
+
 app.Run();
+
+void MigrateDatabase()
+{
+    var connectionString = builder.Configuration.GetAppConnectionString();
+    DatabaseMigration.Migrate(connectionString);
+}
