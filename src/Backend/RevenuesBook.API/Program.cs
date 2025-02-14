@@ -1,6 +1,7 @@
 using RevenuesBook.API.Filters;
 using RevenuesBook.API.Middlewares;
-using RevenuesBook.Application.UseCases.User;
+using RevenuesBook.Application;
+using RevenuesBook.Communication;
 using RevenuesBook.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,12 +11,13 @@ builder.Services.AddControllers(opt => opt.Filters.Add(typeof(ExceptionFilter)))
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<RegisterUserUseCase>();
+builder.Services.AddInfrastructure();
+builder.Services.AddApplication(builder.Configuration);
+builder.Services.AddCommunication();
 
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

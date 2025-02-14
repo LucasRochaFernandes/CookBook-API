@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RevenuesBook.Application.UseCases.User;
+using RevenuesBook.Application.UseCases.User.Interfaces;
 using RevenuesBook.Communication.Requests;
 using RevenuesBook.Communication.Responses;
 
@@ -13,7 +13,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(RegisterUserResponse), StatusCodes.Status201Created)]
     public async Task<IActionResult> Register(
         [FromBody] RegisterUserRequest body,
-        [FromServices] RegisterUserUseCase useCase
+        [FromServices] IRegisterUserUseCase useCase
         )
     {
         var result = await useCase.Execute(body);

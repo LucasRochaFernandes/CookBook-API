@@ -7,7 +7,7 @@ using RevenuesBook.Application.UseCases.User.Interfaces;
 namespace RevenuesBook.Application;
 public static class DependencyInjectionExtension
 {
-    public static void AddAplication(this IServiceCollection services, IConfiguration config)
+    public static void AddApplication(this IServiceCollection services, IConfiguration config)
     {
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
         var appendToPasswordSetting = config.GetValue<string>("Settings:Password:AdditionalKey");
