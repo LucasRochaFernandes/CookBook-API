@@ -2,6 +2,7 @@
 using RevenuesBook.Application.Services.Cryptography;
 using RevenuesBook.Application.UseCases.User.Interfaces;
 using RevenuesBook.Application.Validators.User;
+using RevenuesBook.Communication.Profiles;
 using RevenuesBook.Communication.Requests;
 using RevenuesBook.Communication.Responses;
 using RevenuesBook.Domain.IRepositories;
@@ -9,7 +10,6 @@ using RevenuesBook.Exceptions;
 using RevenuesBook.Exceptions.ExceptionsBase;
 
 namespace RevenuesBook.Application.UseCases.User;
-public class RegisterUserUseCase : IRegisterUserUseCase
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -23,16 +23,9 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
     public async Task<RegisterUserResponse> Execute(RegisterUserRequest request)
     {
-        await Validade(request);
-        var entityUser = _mapper.Map<Domain.Entities.User>(request);
-        entityUser.Password = _passwordEncripter.Encrypt(request.Password);
-        var result = await _userRepository.Create(entityUser);
-        await _userRepository.Commit();
         return new RegisterUserResponse(
-            UserId: result
         );
     }
-    private async Task Validade(RegisterUserRequest request)
     {
         var validator = new RegisterUserValidator();
         var result = validator.Validate(request);
