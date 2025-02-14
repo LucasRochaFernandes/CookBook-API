@@ -1,13 +1,17 @@
+using RevenuesBook.API.Filters;
+using RevenuesBook.API.Middlewares;
+using RevenuesBook.Application.UseCases.User;
 using RevenuesBook.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<AppDbContext>();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<RegisterUserUseCase>();
+
 
 var app = builder.Build();
 
