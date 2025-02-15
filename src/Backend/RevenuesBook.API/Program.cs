@@ -13,7 +13,7 @@ builder.Services.AddControllers(opt => opt.Filters.Add(typeof(ExceptionFilter)))
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddCommunication();
 
@@ -41,5 +41,6 @@ app.Run();
 void MigrateDatabase()
 {
     var connectionString = builder.Configuration.GetAppConnectionString();
-    DatabaseMigration.Migrate(connectionString);
+    var serviceProvider = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider;
+    DatabaseMigration.Migrate(connectionString, serviceProvider);
 }
