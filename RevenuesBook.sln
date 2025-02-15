@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevenuesBook.Infra", "src\B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevenuesBook.Application", "src\Backend\RevenuesBook.Application\RevenuesBook.Application.csproj", "{9FC31484-E0F9-47FE-BCF7-74AF29856883}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTestUtilities", "CommonTestUtilities\CommonTestUtilities.csproj", "{45ADA387-3A0A-4F9C-8A6F-6D51B64F52C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{9FC31484-E0F9-47FE-BCF7-74AF29856883}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FC31484-E0F9-47FE-BCF7-74AF29856883}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FC31484-E0F9-47FE-BCF7-74AF29856883}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45ADA387-3A0A-4F9C-8A6F-6D51B64F52C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45ADA387-3A0A-4F9C-8A6F-6D51B64F52C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45ADA387-3A0A-4F9C-8A6F-6D51B64F52C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45ADA387-3A0A-4F9C-8A6F-6D51B64F52C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +87,6 @@ Global
 		{F703ECDA-596C-4A66-ACF8-D232E8FE8831} = {A51CE642-696B-4CB8-9474-21851E2B84BA}
 		{42DAE8A4-A4F4-405D-91BB-7DB368D1D3E8} = {603424EA-AAF6-420A-AC06-AD069FEA949A}
 		{9FC31484-E0F9-47FE-BCF7-74AF29856883} = {603424EA-AAF6-420A-AC06-AD069FEA949A}
+		{45ADA387-3A0A-4F9C-8A6F-6D51B64F52C2} = {A51CE642-696B-4CB8-9474-21851E2B84BA}
 	EndGlobalSection
 EndGlobal
