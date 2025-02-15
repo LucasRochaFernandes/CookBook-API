@@ -1,6 +1,7 @@
 ﻿namespace RevenuesBook.Communication.Requests;
-public sealed record RegisterUserRequest(
-    string Name,
-    string Email,
-    string Password
-    );
+public sealed class RegisterUserRequest
+{
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+};
