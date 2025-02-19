@@ -33,7 +33,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         await _userRepository.Commit();
 
-        return new RegisterUserResponse(UserId: result);
+        return new RegisterUserResponse { UserId = result };
     }
     private async Task Validate(RegisterUserRequest request)
     {

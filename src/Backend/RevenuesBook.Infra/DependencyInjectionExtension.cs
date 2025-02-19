@@ -11,11 +11,17 @@ public static class DependencyInjectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<AppDbContext>();
         services.AddScoped<IUserRepository, UserRepository>();
+
+        if (configuration.IsTestEnvironment() is true)
+        {
+            return;
+        }
+
+        services.AddDbContext<AppDbContext>();
         AddFluentMigrator(services, configuration);
     }
-    private static void AddFluentMigrator(this IServiceCollection services, IConfiguration configuration)
+    private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetAppConnectionString();
         services.AddFluentMigratorCore().ConfigureRunner(options =>
