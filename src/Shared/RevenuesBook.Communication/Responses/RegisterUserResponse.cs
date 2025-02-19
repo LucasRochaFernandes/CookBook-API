@@ -1,4 +1,5 @@
 ﻿namespace RevenuesBook.Communication.Responses;
-public sealed record RegisterUserResponse(
-    Guid UserId
-    );
+public sealed class RegisterUserResponse
+{
+    public Guid UserId { get; set; }
+}

@@ -1,4 +1,5 @@
 ﻿namespace RevenuesBook.Communication.Responses;
-public sealed record ValidationExceptionResponse(
-    IList<string> Errors
-    );
+public sealed class ValidationExceptionResponse
+{
+    public IList<string> Errors { get; set; }
+}

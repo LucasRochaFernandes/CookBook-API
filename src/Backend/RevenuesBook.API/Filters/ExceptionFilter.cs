@@ -27,15 +27,17 @@ public class ExceptionFilter : IExceptionFilter
         {
             var exception = (ValidationException)context.Exception;
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            context.Result = new BadRequestObjectResult(new ValidationExceptionResponse(exception.Errors));
+            context.Result = new BadRequestObjectResult(
+                new ValidationExceptionResponse { Errors = exception.Errors });
         }
     }
 
     private void HandleUnknownException(ExceptionContext context)
     {
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        context.Result = new ObjectResult(new ValidationExceptionResponse(
-            [ResourceMessagesException.UNKNOWN_ERROR]
-            ));
+        context.Result = new ObjectResult(new ValidationExceptionResponse
+        {
+            Errors = [ResourceMessagesException.UNKNOWN_ERROR]
+        });
     }
 }
