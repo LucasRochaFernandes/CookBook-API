@@ -88,6 +88,15 @@ namespace RevenuesBook.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email and/or password invalid.
+        /// </summary>
+        public static string EMAIL_OR_PASSWORD_INVALID {
+            get {
+                return ResourceManager.GetString("EMAIL_OR_PASSWORD_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The name can not be empty.
         /// </summary>
         public static string NAME_EMPTY {
@@ -97,11 +106,29 @@ namespace RevenuesBook.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no token in the request.
+        /// </summary>
+        public static string NO_TOKEN {
+            get {
+                return ResourceManager.GetString("NO_TOKEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown Error.
         /// </summary>
         public static string UNKNOWN_ERROR {
             get {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User does not have permission to access the resource.
+        /// </summary>
+        public static string USER_WITHOUT_ACCESS_PERMISSION {
+            get {
+                return ResourceManager.GetString("USER_WITHOUT_ACCESS_PERMISSION", resourceCulture);
             }
         }
     }

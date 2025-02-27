@@ -5,6 +5,7 @@ using RevenuesBook.Application.Validators.User;
 using RevenuesBook.Communication.Requests;
 using RevenuesBook.Communication.Responses;
 using RevenuesBook.Domain.IRepositories;
+using RevenuesBook.Domain.Security.Tokens;
 using RevenuesBook.Exceptions;
 using RevenuesBook.Exceptions.ExceptionsBase;
 
@@ -14,11 +15,13 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
     private readonly PasswordEncripter _passwordEncripter;
-    public RegisterUserUseCase(IUserRepository userRepository, IMapper mapper, PasswordEncripter passwordEncripter)
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
+    public RegisterUserUseCase(IUserRepository userRepository, IMapper mapper, PasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
+        _accessTokenGenerator = accessTokenGenerator;
     }
 
 
@@ -33,14 +36,21 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         await _userRepository.Commit();
 
-        return new RegisterUserResponse { UserId = result };
+        return new RegisterUserResponse
+        {
+            UserId = result,
+            Tokens = new TokensResponse
+            {
+                AccessToken = _accessTokenGenerator.Generate(user.Id)
+            }
+        };
     }
     private async Task Validate(RegisterUserRequest request)
     {
         var validator = new RegisterUserValidator();
         var result = validator.Validate(request);
 
-        var emailAlreadyExists = await _userRepository.GetBy(user => user.Email.Equals(request.Email));
+        var emailAlreadyExists = await _userRepository.FindBy(user => user.Email.Equals(request.Email));
         if (emailAlreadyExists is not null)
         {
             result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceMessagesException.EMAIL_ALREADY_EXISTS));

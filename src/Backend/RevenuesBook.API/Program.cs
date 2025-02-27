@@ -1,22 +1,63 @@
+using Microsoft.OpenApi.Models;
+using RevenuesBook.API.Converters;
 using RevenuesBook.API.Filters;
 using RevenuesBook.API.Middlewares;
+using RevenuesBook.API.Token;
 using RevenuesBook.Application;
 using RevenuesBook.Communication;
+using RevenuesBook.Domain.Security.Tokens;
 using RevenuesBook.Infra;
 using RevenuesBook.Infra.Extensions;
 using RevenuesBook.Infra.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers(opt => opt.Filters.Add(typeof(ExceptionFilter)));
+builder.Services.AddControllers(opt => opt.Filters.Add(typeof(ExceptionFilter)))
+     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new StringConverter()));
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme.  
+        Enter 'Bearer' [space] and then your token in the text input below.
+        Example: 'Bearer 12345abcdef'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header
+            },
+            new List<string>()
+        }
+    });
+});
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddCommunication();
 
+builder.Services.AddScoped<ITokenProvider, HttpContextToken>();
+
+builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -36,7 +77,7 @@ app.MapControllers();
 
 MigrateDatabase();
 
-app.Run();
+await app.RunAsync();
 
 void MigrateDatabase()
 {
@@ -49,4 +90,7 @@ void MigrateDatabase()
     DatabaseMigration.Migrate(connectionString, serviceProvider);
 }
 
-public partial class Program { }
+public partial class Program
+{
+    protected Program() { }
+}
