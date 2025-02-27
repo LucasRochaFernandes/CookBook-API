@@ -2,47 +2,44 @@
 using CommonTestUtilities.Mapper;
 using CommonTestUtilities.Repositorires;
 using CommonTestUtilities.Requests;
+using CommonTestUtilities.Tokens;
 using RevenuesBook.Application.UseCases.User;
-using RevenuesBook.Application.UseCases.User.Interfaces;
 using RevenuesBook.Communication.Responses;
+using RevenuesBook.Domain.IRepositories;
 using RevenuesBook.Exceptions;
 using RevenuesBook.Exceptions.ExceptionsBase;
-using System.Linq.Expressions;
 
 namespace RevenuesBook.UnitTests.User.Register;
 public class RegisterUserUseCaseTest
 {
-    public IRegisterUserUseCase CreateUseCase(
-        Expression<Func<Domain.Entities.User, bool>>? getCondition = null)
-    {
-        var mapper = AutoMapperBuilder.Build();
-        var passwordEncripter = EncripterBuilder.Build();
-        var userRepositoryBuilder = new UserRepositoryBuilder();
-        if (getCondition is not null)
-        {
-            userRepositoryBuilder.GetBySetup(getCondition);
-        }
-        var userRepository = userRepositoryBuilder.Build();
-        return new RegisterUserUseCase(userRepository, mapper, passwordEncripter);
-    }
 
     [Fact]
     public async void Success()
     {
         var request = RegisterUserRequestBuilder.Build();
-        var useCase = CreateUseCase();
+        var userRepository = CreateUserRepository();
+        var mapper = AutoMapperBuilder.Build();
+        var passwordEncripter = EncripterBuilder.Build();
+        var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
+        var useCase = new RegisterUserUseCase(userRepository, mapper, passwordEncripter, accessTokenGenerator);
 
         var result = await useCase.Execute(request);
 
         Assert.NotNull(result);
+        Assert.NotNull(result.Tokens);
+        var accessTokenValue = Assert.IsType<string>(result.Tokens.AccessToken);
+        Assert.False(string.IsNullOrEmpty(accessTokenValue));
     }
 
     [Fact]
     public async Task Error_Already_Exists()
     {
         var request = RegisterUserRequestBuilder.Build();
-        var useCase = CreateUseCase(
-            getCondition: (user) => user.Email.Equals(request.Email));
+        var userRepository = CreateUserRepository(FindByReturnsUser: true);
+        var mapper = AutoMapperBuilder.Build();
+        var passwordEncripter = EncripterBuilder.Build();
+        var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
+        var useCase = new RegisterUserUseCase(userRepository, mapper, passwordEncripter, accessTokenGenerator);
 
 
         Func<Task<RegisterUserResponse>> act = async () => await useCase.Execute(request);
@@ -50,4 +47,15 @@ public class RegisterUserUseCaseTest
         var exception = await Assert.ThrowsAsync<ValidationException>(act);
         Assert.Contains(ResourceMessagesException.EMAIL_ALREADY_EXISTS, exception.Errors);
     }
+
+    private static IUserRepository CreateUserRepository(bool FindByReturnsUser = false)
+    {
+        var userRepositoryBuilder = new UserRepositoryBuilder();
+        if (FindByReturnsUser)
+        {
+            userRepositoryBuilder.FindByHasToReturnUser();
+        }
+        return userRepositoryBuilder.Build();
+    }
+
 }
