@@ -18,10 +18,17 @@ public class UserRepository : IUserRepository
         return result.Entity.Id;
     }
 
-    public async Task<User?> GetBy(Expression<Func<User, bool>> condition)
+    public async Task<User?> FindBy(Expression<Func<User, bool>> condition, bool AsNoTracking = false)
     {
-        var User = await _appDbContext.Users.FirstOrDefaultAsync(condition);
-        return User;
+        if (AsNoTracking)
+        {
+            return await _appDbContext.Users.AsNoTracking().FirstOrDefaultAsync(condition);
+        }
+        else
+        {
+            return await _appDbContext.Users.FirstOrDefaultAsync(condition);
+        }
+
     }
     public async Task Commit()
     {

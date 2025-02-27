@@ -126,10 +126,19 @@
   <data name="EMAIL_INVALID" xml:space="preserve">
     <value>O e-mail não é válido</value>
   </data>
+  <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
+    <value>Email e/ou senha inválidos</value>
+  </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>O nome não pode ser vazio</value>
   </data>
+  <data name="NO_TOKEN" xml:space="preserve">
+    <value>Não há token na solicitação</value>
+  </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro desconhecido</value>
+  </data>
+  <data name="USER_WITHOUT_ACCESS_PERMISSION" xml:space="preserve">
+    <value>O usuário não tem permissão para acessar o recurso</value>
   </data>
 </root>

@@ -21,23 +21,27 @@ public class ExceptionFilter : IExceptionFilter
         }
     }
 
-    private void HandleAppException(ExceptionContext context)
+    private static void HandleAppException(ExceptionContext context)
     {
+        if (context.Exception is UnauthorizedException)
+        {
+            var exception = (UnauthorizedException)context.Exception;
+            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            context.Result = new UnauthorizedObjectResult(
+                new ErrorResponse(exception.Message));
+        }
         if (context.Exception is ValidationException)
         {
             var exception = (ValidationException)context.Exception;
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             context.Result = new BadRequestObjectResult(
-                new ValidationExceptionResponse { Errors = exception.Errors });
+                new ErrorResponse(exception.Errors));
         }
     }
 
-    private void HandleUnknownException(ExceptionContext context)
+    private static void HandleUnknownException(ExceptionContext context)
     {
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        context.Result = new ObjectResult(new ValidationExceptionResponse
-        {
-            Errors = [ResourceMessagesException.UNKNOWN_ERROR]
-        });
+        context.Result = new ObjectResult(new ErrorResponse(ResourceMessagesException.UNKNOWN_ERROR));
     }
 }

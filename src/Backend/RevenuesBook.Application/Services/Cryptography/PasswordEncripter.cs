@@ -18,7 +18,7 @@ public class PasswordEncripter
         var hashBytes = SHA512.HashData(bytes);
         return StringBytes(hashBytes);
     }
-    private string StringBytes(byte[] bytes)
+    private static string StringBytes(byte[] bytes)
     {
         var sb = new StringBuilder();
         foreach (byte b in bytes)

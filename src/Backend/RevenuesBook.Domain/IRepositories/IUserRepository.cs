@@ -5,6 +5,6 @@ namespace RevenuesBook.Domain.IRepositories;
 public interface IUserRepository
 {
     public Task<Guid> Create(User entityUser);
-    public Task<User?> GetBy(Expression<Func<User, bool>> condition);
+    public Task<User?> FindBy(Expression<Func<User, bool>> condition, bool AsNoTracking = false);
     public Task Commit();
 }
