@@ -13,11 +13,11 @@ public class UserRepositoryBuilder
         _userRepositoryMock = new Mock<IUserRepository>();
     }
 
-    public void GetBySetup(Expression<Func<User, bool>> condition)
+    public void FindByHasToReturnUser(User? user = null)
     {
         _userRepositoryMock
-            .Setup(repo => repo.GetBy(It.IsAny<Expression<Func<User, bool>>>()))
-            .ReturnsAsync(new User());
+            .Setup(repo => repo.FindBy(It.IsAny<Expression<Func<User, bool>>>(), false))
+            .ReturnsAsync(() => user ?? new User());
     }
     public IUserRepository Build()
     {
