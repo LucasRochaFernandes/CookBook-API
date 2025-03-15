@@ -61,6 +61,15 @@ namespace RevenuesBook.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password does not match with the user current password.
+        /// </summary>
+        public static string CURRENT_PASSWORD_INVALID {
+            get {
+                return ResourceManager.GetString("CURRENT_PASSWORD_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email already exists.
         /// </summary>
         public static string EMAIL_ALREADY_EXISTS {
@@ -97,6 +106,15 @@ namespace RevenuesBook.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password length must be greater than 6 characters.
+        /// </summary>
+        public static string INVALID_PASSWORD {
+            get {
+                return ResourceManager.GetString("INVALID_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The name can not be empty.
         /// </summary>
         public static string NAME_EMPTY {
@@ -111,6 +129,15 @@ namespace RevenuesBook.Exceptions {
         public static string NO_TOKEN {
             get {
                 return ResourceManager.GetString("NO_TOKEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password can not be empty.
+        /// </summary>
+        public static string PASSWORD_EMPTY {
+            get {
+                return ResourceManager.GetString("PASSWORD_EMPTY", resourceCulture);
             }
         }
         

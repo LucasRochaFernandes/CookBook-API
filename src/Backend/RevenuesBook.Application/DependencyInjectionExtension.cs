@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RevenuesBook.Application.Services.Cryptography;
 using RevenuesBook.Application.UseCases.Login;
 using RevenuesBook.Application.UseCases.Login.Interfaces;
 using RevenuesBook.Application.UseCases.User;
@@ -13,7 +12,8 @@ public static class DependencyInjectionExtension
     {
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
         services.AddScoped<ILoginUseCase, LoginUseCase>();
-        var appendToPasswordSetting = config.GetValue<string>("Settings:Password:AdditionalKey");
-        services.AddScoped(opt => new PasswordEncripter(appendToPasswordSetting!));
+        services.AddScoped<IUserProfileUseCase, UserProfileUseCase>();
+        services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
+        services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
     }
 }

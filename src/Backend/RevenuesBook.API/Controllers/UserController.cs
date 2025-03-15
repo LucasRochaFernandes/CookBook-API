@@ -9,7 +9,6 @@ namespace RevenuesBook.API.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-[AuthenticatedUser]
 public class UserController : ControllerBase
 {
     [HttpPost]
@@ -21,5 +20,39 @@ public class UserController : ControllerBase
     {
         var result = await useCase.Execute(body);
         return Created(string.Empty, result);
+    }
+    [HttpGet]
+    [AuthenticatedUser]
+    public async Task<IActionResult> UserProfile(
+        [FromServices] IUserProfileUseCase useCase
+        )
+    {
+        var result = await useCase.Execute();
+        return Ok(result);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [AuthenticatedUser]
+    public async Task<IActionResult> Update(
+        [FromBody] UpdateUserRequest body,
+        [FromServices] IUpdateUserUseCase useCase
+        )
+    {
+        await useCase.Execute(body);
+        return NoContent();
+    }
+    [HttpPut("change-password")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [AuthenticatedUser]
+    public async Task<IActionResult> ChangePassword(
+        [FromBody] ChangePasswordRequest body,
+        [FromServices] IChangePasswordUseCase useCase
+        )
+    {
+        await useCase.Execute(body);
+        return NoContent();
     }
 }

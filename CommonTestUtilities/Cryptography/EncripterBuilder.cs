@@ -1,10 +1,11 @@
-﻿using RevenuesBook.Application.Services.Cryptography;
+﻿using RevenuesBook.Domain.Security.Cryptography;
+using RevenuesBook.Infra.Security.Cryptography;
 
 namespace CommonTestUtilities.Cryptography;
 public class EncripterBuilder
 {
-    public static PasswordEncripter Build()
+    public static IPasswordEncripter Build()
     {
-        return new PasswordEncripter("abc123");
+        return new Sha512Encripter("abc123");
     }
 }
