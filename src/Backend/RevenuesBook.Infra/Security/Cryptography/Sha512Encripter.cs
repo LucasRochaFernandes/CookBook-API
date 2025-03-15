@@ -1,12 +1,13 @@
-﻿using System.Security.Cryptography;
+﻿using RevenuesBook.Domain.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Text;
 
-namespace RevenuesBook.Application.Services.Cryptography;
-public class PasswordEncripter
+namespace RevenuesBook.Infra.Security.Cryptography;
+public class Sha512Encripter : IPasswordEncripter
 {
     private readonly string _appendToPassword;
 
-    public PasswordEncripter(string appendToPassword)
+    public Sha512Encripter(string appendToPassword)
     {
         _appendToPassword = appendToPassword;
     }

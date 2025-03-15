@@ -46,6 +46,10 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
         return _password;
     }
+    public Guid GetUserDefaultId()
+    {
+        return _user.Id;
+    }
     private void StartDatabase(AppDbContext dbContext)
     {
         (_user, _password) = UserBuilder.Build();

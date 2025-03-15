@@ -1,8 +1,8 @@
-﻿using RevenuesBook.Application.Services.Cryptography;
-using RevenuesBook.Application.UseCases.Login.Interfaces;
+﻿using RevenuesBook.Application.UseCases.Login.Interfaces;
 using RevenuesBook.Communication.Requests;
 using RevenuesBook.Communication.Responses;
 using RevenuesBook.Domain.IRepositories;
+using RevenuesBook.Domain.Security.Cryptography;
 using RevenuesBook.Domain.Security.Tokens;
 using RevenuesBook.Exceptions.ExceptionsBase;
 
@@ -10,9 +10,9 @@ namespace RevenuesBook.Application.UseCases.Login;
 public class LoginUseCase : ILoginUseCase
 {
     private readonly IUserRepository _userRepository;
-    private readonly PasswordEncripter _passwordEncripter;
+    private readonly IPasswordEncripter _passwordEncripter;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
-    public LoginUseCase(IUserRepository userRepository, PasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator)
+    public LoginUseCase(IUserRepository userRepository, IPasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator)
     {
         _userRepository = userRepository;
         _passwordEncripter = passwordEncripter;

@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using RevenuesBook.Application.Services.Cryptography;
+using FluentValidation.Results;
 using RevenuesBook.Application.UseCases.User.Interfaces;
 using RevenuesBook.Application.Validators.User;
 using RevenuesBook.Communication.Requests;
 using RevenuesBook.Communication.Responses;
 using RevenuesBook.Domain.IRepositories;
+using RevenuesBook.Domain.Security.Cryptography;
 using RevenuesBook.Domain.Security.Tokens;
 using RevenuesBook.Exceptions;
 using RevenuesBook.Exceptions.ExceptionsBase;
@@ -14,9 +15,9 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
-    private readonly PasswordEncripter _passwordEncripter;
+    private readonly IPasswordEncripter _passwordEncripter;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
-    public RegisterUserUseCase(IUserRepository userRepository, IMapper mapper, PasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator)
+    public RegisterUserUseCase(IUserRepository userRepository, IMapper mapper, IPasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator)
     {
         _userRepository = userRepository;
         _mapper = mapper;
@@ -53,7 +54,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         var emailAlreadyExists = await _userRepository.FindBy(user => user.Email.Equals(request.Email));
         if (emailAlreadyExists is not null)
         {
-            result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceMessagesException.EMAIL_ALREADY_EXISTS));
+            result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.EMAIL_ALREADY_EXISTS));
         }
 
         if (result.IsValid is false)

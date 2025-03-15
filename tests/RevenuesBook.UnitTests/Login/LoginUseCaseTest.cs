@@ -1,6 +1,6 @@
 ﻿using CommonTestUtilities.Cryptography;
 using CommonTestUtilities.Entities;
-using CommonTestUtilities.Repositorires;
+using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Tokens;
 using RevenuesBook.Application.UseCases.Login;
 using RevenuesBook.Communication.Requests;

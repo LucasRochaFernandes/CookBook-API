@@ -2,10 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RevenuesBook.Domain.IRepositories;
+using RevenuesBook.Domain.Security.Cryptography;
 using RevenuesBook.Domain.Security.Tokens;
 using RevenuesBook.Domain.Services.LoggedUser;
 using RevenuesBook.Infra.Extensions;
 using RevenuesBook.Infra.Repositories;
+using RevenuesBook.Infra.Security.Cryptography;
 using RevenuesBook.Infra.Security.Tokens.Access.Generator;
 using RevenuesBook.Infra.Security.Tokens.Access.Validator;
 using RevenuesBook.Infra.Services.LoggedUser;
@@ -16,6 +18,8 @@ public static class DependencyInjectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        var appendToPasswordSetting = configuration.GetValue<string>("Settings:Password:AdditionalKey");
+        services.AddScoped<IPasswordEncripter>(opt => new Sha512Encripter(appendToPasswordSetting!));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ILoggedUser, LoggedUser>();
         AddTokens(services, configuration);

@@ -34,4 +34,9 @@ public class UserRepository : IUserRepository
     {
         await _appDbContext.SaveChangesAsync();
     }
+
+    public void Update(User entityUser)
+    {
+        _appDbContext.Users.Update(entityUser);
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RevenuesBook.Communication.Requests;
+using RevenuesBook.Communication.Responses;
 
 namespace RevenuesBook.Communication.Services.AutoMapper;
 public class AutoMapping : Profile
@@ -18,6 +19,6 @@ public class AutoMapping : Profile
 
     private void DomainToResponse()
     {
-
+        CreateMap<Domain.Entities.User, UserProfileResponse>();
     }
 }
