@@ -144,6 +144,9 @@
   <data name="PASSWORD_EMPTY" xml:space="preserve">
     <value>A senha não pode ser vazia</value>
   </data>
+  <data name="RECIPE_TITLE_EMPTY" xml:space="preserve">
+    <value>O título está vazio</value>
+  </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro desconhecido</value>
   </data>

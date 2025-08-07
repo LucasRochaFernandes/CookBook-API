@@ -142,6 +142,15 @@ namespace RevenuesBook.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Title is empty.
+        /// </summary>
+        public static string RECIPE_TITLE_EMPTY {
+            get {
+                return ResourceManager.GetString("RECIPE_TITLE_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown Error.
         /// </summary>
         public static string UNKNOWN_ERROR {

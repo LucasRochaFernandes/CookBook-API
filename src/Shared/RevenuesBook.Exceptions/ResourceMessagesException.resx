@@ -144,6 +144,9 @@
   <data name="PASSWORD_EMPTY" xml:space="preserve">
     <value>The password can not be empty</value>
   </data>
+  <data name="RECIPE_TITLE_EMPTY" xml:space="preserve">
+    <value>Title is empty</value>
+  </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Unknown Error</value>
   </data>
