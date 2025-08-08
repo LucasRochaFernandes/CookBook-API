@@ -1,11 +1,11 @@
-﻿using RevenuesBook.Domain.Entities;
-using System.Linq.Expressions;
+﻿using RevenuesBook.Domain.Dtos;
+using RevenuesBook.Domain.Entities;
 
 namespace RevenuesBook.Domain.IRepositories;
 public interface IRecipeRepository
 {
     public Task<Guid> Create(Recipe entityRecipe);
-    public Task<Recipe?> FindBy(Expression<Func<Recipe, bool>> condition, bool AsNoTracking = false);
+    public Task<IList<Recipe>> Filter(User user, FilterRecipeDto filtersDto);
     public void Update(Recipe entityRecipe);
     public Task Commit();
 }

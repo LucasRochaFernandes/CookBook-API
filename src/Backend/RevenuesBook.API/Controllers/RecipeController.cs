@@ -19,4 +19,16 @@ public class RecipeController : ControllerBase
         var result = await useCase.Execute(request);
         return Created(string.Empty, result);
     }
+    [HttpPost("filter")]
+    public async Task<IActionResult> Filter(
+        [FromServices] IFilterRecipeUseCase useCase,
+        [FromBody] RecipeFilterRequest request)
+    {
+        var result = await useCase.Execute(request);
+        if (result.Recipes.Any())
+        {
+            return Ok(result);
+        }
+        return NoContent();
+    }
 }

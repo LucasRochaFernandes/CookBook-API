@@ -33,5 +33,8 @@ public class AutoMapping : Profile
     {
         CreateMap<User, UserProfileResponse>();
         CreateMap<Recipe, RecipeResponse>();
+        CreateMap<Recipe, RecipeShortResponse>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Title))
+            .ForMember(dest => dest.AmountIngredients, opt => opt.MapFrom(src => src.Ingredients.Count));
     }
 }
