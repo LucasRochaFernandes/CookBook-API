@@ -9,6 +9,7 @@ public class AppDbContext : DbContext
 
     private readonly IConfiguration _configuration;
     public DbSet<User> Users { get; set; }
+    public DbSet<Recipe> Recipes { get; set; }
 
     public AppDbContext(IServiceProvider serviceProvider, DbContextOptions<AppDbContext> options)
         : base(options)

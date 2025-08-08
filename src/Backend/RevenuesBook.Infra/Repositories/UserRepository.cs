@@ -37,6 +37,7 @@ public class UserRepository : IUserRepository
 
     public void Update(User entityUser)
     {
+        entityUser.UpdatedAt = DateTime.UtcNow;
         _appDbContext.Users.Update(entityUser);
     }
 }

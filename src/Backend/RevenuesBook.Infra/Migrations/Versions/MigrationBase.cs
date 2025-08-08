@@ -7,8 +7,6 @@ public abstract class MigrationBase : ForwardOnlyMigration
     protected ICreateTableColumnOptionOrWithColumnSyntax CreateTable(string tableName)
     {
         return Create.Table(tableName)
-            .WithColumn("Id").AsGuid().PrimaryKey()
-            .WithColumn("UpdatedAt").AsDateTime().NotNullable()
-            .WithColumn("CreatedAt").AsDateTime().NotNullable();
+            .WithColumn("Id").AsGuid().PrimaryKey();
     }
 }

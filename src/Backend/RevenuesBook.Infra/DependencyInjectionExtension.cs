@@ -21,6 +21,7 @@ public static class DependencyInjectionExtension
         var appendToPasswordSetting = configuration.GetValue<string>("Settings:Password:AdditionalKey");
         services.AddScoped<IPasswordEncripter>(opt => new Sha512Encripter(appendToPasswordSetting!));
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRecipeRepository, RecipeRepository>();
         services.AddScoped<ILoggedUser, LoggedUser>();
         AddTokens(services, configuration);
 

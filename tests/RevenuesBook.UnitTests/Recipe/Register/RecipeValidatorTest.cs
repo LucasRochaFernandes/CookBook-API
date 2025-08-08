@@ -1,7 +1,7 @@
 ﻿using CommonTestUtilities.Requests;
 
-namespace RevenuesBook.UnitTests.Recipe;
-public class RecipeValidator
+namespace RevenuesBook.UnitTests.Recipe.Register;
+public class RecipeValidatorTest
 {
     [Fact]
     public void Sucess()
