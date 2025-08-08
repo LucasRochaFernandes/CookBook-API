@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using RevenuesBook.Application.UseCases.Login;
 using RevenuesBook.Application.UseCases.Login.Interfaces;
+using RevenuesBook.Application.UseCases.Recipes;
+using RevenuesBook.Application.UseCases.Recipes.Interfaces;
 using RevenuesBook.Application.UseCases.User;
 using RevenuesBook.Application.UseCases.User.Interfaces;
 
@@ -15,5 +17,6 @@ public static class DependencyInjectionExtension
         services.AddScoped<IUserProfileUseCase, UserProfileUseCase>();
         services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
         services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
+        services.AddScoped<IRegisterRecipeUseCase, RegisterRecipeUseCase>();
     }
 }

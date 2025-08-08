@@ -1,4 +1,8 @@
-﻿namespace RevenuesBook.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RevenuesBook.Domain.Entities;
+
+[Table("DishTypes")]
 public class DishType
 {
     public Guid Id { get; set; } = Guid.NewGuid();

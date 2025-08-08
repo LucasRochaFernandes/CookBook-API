@@ -13,5 +13,5 @@ public class Recipe
     public IList<Ingredient> Ingredients { get; set; } = [];
     public IList<Instruction> Instructions { get; set; } = [];
     public IList<DishType> DishTypes { get; set; } = [];
-    public Guid UserId { get; set; }
+    public Guid? UserId { get; set; }
 }

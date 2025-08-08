@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RevenuesBook.Communication.Requests;
 using RevenuesBook.Communication.Responses;
+using RevenuesBook.Domain.Entities;
 
 namespace RevenuesBook.Communication.Services.AutoMapper;
 public class AutoMapping : Profile
@@ -13,12 +14,24 @@ public class AutoMapping : Profile
 
     private void RequestToDomain()
     {
-        CreateMap<RegisterUserRequest, Domain.Entities.User>()
+        CreateMap<RegisterUserRequest, User>()
             .ForMember(dest => dest.Password, opt => opt.Ignore());
+
+        CreateMap<RequestInstruction, Instruction>();
+
+        CreateMap<RecipeRequest, Recipe>()
+            .ForMember(dest => dest.Instructions, opt => opt.Ignore())
+            .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src =>
+                src.Ingredients.Select(item => new Ingredient { Item = item })))
+            .ForMember(dest => dest.DishTypes, opt => opt.MapFrom(src =>
+                src.DishTypes.Select(dishTypeEnum => new DishType { Type = dishTypeEnum })));
+        CreateMap<Domain.Enums.DishType, DishType>()
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src));
     }
 
     private void DomainToResponse()
     {
-        CreateMap<Domain.Entities.User, UserProfileResponse>();
+        CreateMap<User, UserProfileResponse>();
+        CreateMap<Recipe, RecipeResponse>();
     }
 }
