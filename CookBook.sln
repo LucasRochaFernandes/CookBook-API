@@ -1,0 +1,103 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5948DE0B-A959-420E-9616-C9C9293C1E86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A51CE642-696B-4CB8-9474-21851E2B84BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{603424EA-AAF6-420A-AC06-AD069FEA949A}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{824CBB8D-554B-406D-A3EC-497DA6AE697D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0FF4F109-EF03-4A21-A6B5-4C699923291C}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTestUtilities", "tests\CommonTestUtilities\CommonTestUtilities.csproj", "{2F9179D7-0ADC-56F5-A754-A37749A03642}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.API", "src\Backend\CookBook.API\CookBook.API.csproj", "{871D2D00-7127-60C5-2B4E-71BF6EE83482}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.Application", "src\Backend\CookBook.Application\CookBook.Application.csproj", "{C640004D-A359-977B-6A4B-0CC707796993}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.Domain", "src\Backend\CookBook.Domain\CookBook.Domain.csproj", "{0BD4EC3B-525B-8665-0E44-B57D36A8F3E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.Infra", "src\Backend\CookBook.Infra\CookBook.Infra.csproj", "{DD271BE8-5B8F-C7EC-2EB4-E67EDF806B86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.Communication", "src\Shared\CookBook.Communication\CookBook.Communication.csproj", "{892B9945-54FB-5A9B-2DF2-B9619F6AC101}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.Exceptions", "src\Shared\CookBook.Exceptions\CookBook.Exceptions.csproj", "{90C54DFA-0EBE-7E8C-BD64-E7B0DBB62094}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.IntegrationTests", "tests\CookBook.IntegrationTests\CookBook.IntegrationTests.csproj", "{09E436A1-A27B-4EEA-5E2C-1038D2BC5EEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBook.UnitTests", "tests\CookBook.UnitTests\CookBook.UnitTests.csproj", "{660947D2-FF0D-FDBD-F9BC-93D57F294F9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F9179D7-0ADC-56F5-A754-A37749A03642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9179D7-0ADC-56F5-A754-A37749A03642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9179D7-0ADC-56F5-A754-A37749A03642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9179D7-0ADC-56F5-A754-A37749A03642}.Release|Any CPU.Build.0 = Release|Any CPU
+		{871D2D00-7127-60C5-2B4E-71BF6EE83482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{871D2D00-7127-60C5-2B4E-71BF6EE83482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{871D2D00-7127-60C5-2B4E-71BF6EE83482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{871D2D00-7127-60C5-2B4E-71BF6EE83482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C640004D-A359-977B-6A4B-0CC707796993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C640004D-A359-977B-6A4B-0CC707796993}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C640004D-A359-977B-6A4B-0CC707796993}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C640004D-A359-977B-6A4B-0CC707796993}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BD4EC3B-525B-8665-0E44-B57D36A8F3E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BD4EC3B-525B-8665-0E44-B57D36A8F3E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BD4EC3B-525B-8665-0E44-B57D36A8F3E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BD4EC3B-525B-8665-0E44-B57D36A8F3E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD271BE8-5B8F-C7EC-2EB4-E67EDF806B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD271BE8-5B8F-C7EC-2EB4-E67EDF806B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD271BE8-5B8F-C7EC-2EB4-E67EDF806B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD271BE8-5B8F-C7EC-2EB4-E67EDF806B86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{892B9945-54FB-5A9B-2DF2-B9619F6AC101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{892B9945-54FB-5A9B-2DF2-B9619F6AC101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{892B9945-54FB-5A9B-2DF2-B9619F6AC101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{892B9945-54FB-5A9B-2DF2-B9619F6AC101}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90C54DFA-0EBE-7E8C-BD64-E7B0DBB62094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90C54DFA-0EBE-7E8C-BD64-E7B0DBB62094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90C54DFA-0EBE-7E8C-BD64-E7B0DBB62094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90C54DFA-0EBE-7E8C-BD64-E7B0DBB62094}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09E436A1-A27B-4EEA-5E2C-1038D2BC5EEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09E436A1-A27B-4EEA-5E2C-1038D2BC5EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09E436A1-A27B-4EEA-5E2C-1038D2BC5EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09E436A1-A27B-4EEA-5E2C-1038D2BC5EEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{660947D2-FF0D-FDBD-F9BC-93D57F294F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{660947D2-FF0D-FDBD-F9BC-93D57F294F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{660947D2-FF0D-FDBD-F9BC-93D57F294F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{660947D2-FF0D-FDBD-F9BC-93D57F294F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{603424EA-AAF6-420A-AC06-AD069FEA949A} = {5948DE0B-A959-420E-9616-C9C9293C1E86}
+		{824CBB8D-554B-406D-A3EC-497DA6AE697D} = {5948DE0B-A959-420E-9616-C9C9293C1E86}
+		{2F9179D7-0ADC-56F5-A754-A37749A03642} = {A51CE642-696B-4CB8-9474-21851E2B84BA}
+		{871D2D00-7127-60C5-2B4E-71BF6EE83482} = {603424EA-AAF6-420A-AC06-AD069FEA949A}
+		{C640004D-A359-977B-6A4B-0CC707796993} = {603424EA-AAF6-420A-AC06-AD069FEA949A}
+		{0BD4EC3B-525B-8665-0E44-B57D36A8F3E8} = {603424EA-AAF6-420A-AC06-AD069FEA949A}
+		{DD271BE8-5B8F-C7EC-2EB4-E67EDF806B86} = {603424EA-AAF6-420A-AC06-AD069FEA949A}
+		{892B9945-54FB-5A9B-2DF2-B9619F6AC101} = {824CBB8D-554B-406D-A3EC-497DA6AE697D}
+		{90C54DFA-0EBE-7E8C-BD64-E7B0DBB62094} = {824CBB8D-554B-406D-A3EC-497DA6AE697D}
+		{09E436A1-A27B-4EEA-5E2C-1038D2BC5EEE} = {A51CE642-696B-4CB8-9474-21851E2B84BA}
+		{660947D2-FF0D-FDBD-F9BC-93D57F294F9E} = {A51CE642-696B-4CB8-9474-21851E2B84BA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1732F610-206F-4155-92EA-F951D5A1BF3B}
+	EndGlobalSection
+EndGlobal

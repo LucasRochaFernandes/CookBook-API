@@ -1,4 +1,4 @@
-﻿# RevenuesBook API
+﻿# CookBook API
 
 A simple and powerful API to manage your cooking recipes. Create, edit, filter, and delete your recipes in an organized way.
 

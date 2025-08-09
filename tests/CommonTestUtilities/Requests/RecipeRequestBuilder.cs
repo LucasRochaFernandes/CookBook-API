@@ -1,6 +1,6 @@
 ﻿using Bogus;
-using RevenuesBook.Communication.Requests;
-using RevenuesBook.Domain.Enums;
+using CookBook.Communication.Requests;
+using CookBook.Domain.Enums;
 
 namespace CommonTestUtilities.Requests;
 public class RecipeRequestBuilder

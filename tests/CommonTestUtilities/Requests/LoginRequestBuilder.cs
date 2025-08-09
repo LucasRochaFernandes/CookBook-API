@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using RevenuesBook.Communication.Requests;
+using CookBook.Communication.Requests;
 
 namespace CommonTestUtilities.Requests;
 public class LoginRequestBuilder

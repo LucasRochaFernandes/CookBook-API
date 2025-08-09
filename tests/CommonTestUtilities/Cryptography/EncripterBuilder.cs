@@ -1,5 +1,5 @@
-﻿using RevenuesBook.Domain.Security.Cryptography;
-using RevenuesBook.Infra.Security.Cryptography;
+﻿using CookBook.Domain.Security.Cryptography;
+using CookBook.Infra.Security.Cryptography;
 
 namespace CommonTestUtilities.Cryptography;
 public class EncripterBuilder

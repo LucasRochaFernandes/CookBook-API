@@ -1,6 +1,6 @@
 ﻿using Bogus;
 using CommonTestUtilities.Cryptography;
-using RevenuesBook.Domain.Entities;
+using CookBook.Domain.Entities;
 
 namespace CommonTestUtilities.Entities;
 public class UserBuilder

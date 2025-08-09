@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Backend\RevenuesBook.Domain\RevenuesBook.Domain.csproj" />
-    <ProjectReference Include="..\..\src\Backend\RevenuesBook.Infra\RevenuesBook.Infra.csproj" />
-    <ProjectReference Include="..\..\src\Shared\RevenuesBook.Communication\RevenuesBook.Communication.csproj" />
+    <ProjectReference Include="..\..\src\Backend\CookBook.Domain\CookBook.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Backend\CookBook.Infra\CookBook.Infra.csproj" />
+    <ProjectReference Include="..\..\src\Shared\CookBook.Communication\CookBook.Communication.csproj" />
   </ItemGroup>
 
 </Project>

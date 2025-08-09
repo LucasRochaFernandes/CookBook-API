@@ -1,5 +1,5 @@
-﻿using RevenuesBook.Domain.Security.Tokens;
-using RevenuesBook.Infra.Security.Tokens.Access.Generator;
+﻿using CookBook.Domain.Security.Tokens;
+using CookBook.Infra.Security.Tokens.Access.Generator;
 
 namespace CommonTestUtilities.Tokens;
 public class JwtTokenGeneratorBuilder
