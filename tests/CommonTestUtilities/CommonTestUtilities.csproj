@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Backend\RevenuesBook.Application\RevenuesBook.Application.csproj" />
-    <ProjectReference Include="..\src\Backend\RevenuesBook.Infra\RevenuesBook.Infra.csproj" />
-    <ProjectReference Include="..\src\Shared\RevenuesBook.Communication\RevenuesBook.Communication.csproj" />
+    <ProjectReference Include="..\..\src\Backend\RevenuesBook.Domain\RevenuesBook.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Backend\RevenuesBook.Infra\RevenuesBook.Infra.csproj" />
+    <ProjectReference Include="..\..\src\Shared\RevenuesBook.Communication\RevenuesBook.Communication.csproj" />
   </ItemGroup>
 
 </Project>
