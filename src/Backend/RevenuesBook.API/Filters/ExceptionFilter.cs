@@ -30,12 +30,18 @@ public class ExceptionFilter : IExceptionFilter
             context.Result = new UnauthorizedObjectResult(
                 new ErrorResponse(exception.Message));
         }
-        if (context.Exception is ValidationException)
+        else if (context.Exception is ValidationException)
         {
             var exception = (ValidationException)context.Exception;
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             context.Result = new BadRequestObjectResult(
                 new ErrorResponse(exception.Errors));
+        }
+        else if (context.Exception is NotFoundException)
+        {
+            var exception = (NotFoundException)context.Exception;
+            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            context.Result = new NotFoundObjectResult(new ErrorResponse(context.Exception.Message));
         }
     }
 

@@ -53,6 +53,16 @@ public class RecipeRepository : IRecipeRepository
         return await query.ToListAsync();
     }
 
+    public async Task<Recipe?> GetById(User user, Guid recipeId)
+    {
+        return await _appDbContext.Recipes
+            .AsNoTracking()
+            .Include(recipe => recipe.Instructions)
+            .Include(recipe => recipe.DishTypes)
+            .Include(recipe => recipe.Ingredients)
+            .FirstOrDefaultAsync(recipe => recipe.UserId.Equals(user.Id) && recipe.Id.Equals(recipeId));
+    }
+
     public void Update(Recipe entityUser)
     {
         _appDbContext.Recipes.Update(entityUser);

@@ -19,5 +19,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
         services.AddScoped<IRegisterRecipeUseCase, RegisterRecipeUseCase>();
         services.AddScoped<IFilterRecipeUseCase, FilterRecipeUseCase>();
+        services.AddScoped<IGetRecipeByIdUseCase, GetRecipeByIdUseCase>();
+
     }
 }

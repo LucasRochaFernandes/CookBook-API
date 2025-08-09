@@ -20,7 +20,7 @@ public class RegisterRecipeUseCase : IRegisterRecipeUseCase
         _loggedUser = loggedUser;
     }
 
-    public async Task<RecipeResponse> Execute(RecipeRequest request)
+    public async Task<RegisterRecipeResponse> Execute(RecipeRequest request)
     {
         Validate(request);
         var loggedUser = await _loggedUser.User();
@@ -34,7 +34,7 @@ public class RegisterRecipeUseCase : IRegisterRecipeUseCase
         recipe.Instructions = _mapper.Map<IList<Domain.Entities.Instruction>>(instructions);
         var recipeId = await _recipeRepository.Create(recipe);
         await _recipeRepository.Commit();
-        return new RecipeResponse
+        return new RegisterRecipeResponse
         {
             RecipeId = recipeId,
         };

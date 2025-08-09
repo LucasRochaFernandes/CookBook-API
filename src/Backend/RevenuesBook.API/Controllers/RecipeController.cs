@@ -31,4 +31,16 @@ public class RecipeController : ControllerBase
         }
         return NoContent();
     }
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> GetById(
+        [FromServices] IGetRecipeByIdUseCase useCase,
+        [FromRoute] Guid id
+        )
+    {
+        var result = await useCase.Execute(id);
+        return Ok(result);
+    }
+
+
 }
