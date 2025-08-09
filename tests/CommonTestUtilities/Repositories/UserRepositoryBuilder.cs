@@ -1,6 +1,6 @@
 ﻿using Moq;
-using RevenuesBook.Domain.Entities;
-using RevenuesBook.Domain.IRepositories;
+using CookBook.Domain.Entities;
+using CookBook.Domain.IRepositories;
 using System.Linq.Expressions;
 
 namespace CommonTestUtilities.Repositories;

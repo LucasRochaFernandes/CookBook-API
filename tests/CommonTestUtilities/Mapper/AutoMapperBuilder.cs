@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using RevenuesBook.Communication.Services.AutoMapper;
+using CookBook.Communication.Services.AutoMapper;
 
 namespace CommonTestUtilities.Mapper;
 

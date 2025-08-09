@@ -1,6 +1,6 @@
 ﻿using Moq;
-using RevenuesBook.Domain.Entities;
-using RevenuesBook.Domain.Services.LoggedUser;
+using CookBook.Domain.Entities;
+using CookBook.Domain.Services.LoggedUser;
 
 namespace CommonTestUtilities.LoggedUser;
 public class LoggedUserBuilder

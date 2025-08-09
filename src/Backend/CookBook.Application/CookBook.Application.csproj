@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\CookBook.Communication\CookBook.Communication.csproj" />
+    <ProjectReference Include="..\..\Shared\CookBook.Exceptions\CookBook.Exceptions.csproj" />
+    <ProjectReference Include="..\CookBook.Domain\CookBook.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

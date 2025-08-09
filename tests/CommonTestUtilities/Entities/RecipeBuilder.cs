@@ -1,6 +1,6 @@
 ﻿using Bogus;
-using RevenuesBook.Domain.Entities;
-using RevenuesBook.Domain.Enums;
+using CookBook.Domain.Entities;
+using CookBook.Domain.Enums;
 
 namespace CommonTestUtilities.Entities;
 public class RecipeBuilder
@@ -35,10 +35,10 @@ public class RecipeBuilder
                 Step = 1,
                 Text = f.Lorem.Paragraph()
             }))
-            .RuleFor(u => u.DishTypes, (f) => f.Make(1, () => new RevenuesBook.Domain.Entities.DishType
+            .RuleFor(u => u.DishTypes, (f) => f.Make(1, () => new CookBook.Domain.Entities.DishType
             {
                 Id = Guid.NewGuid(),
-                Type = f.PickRandom<RevenuesBook.Domain.Enums.DishType>()
+                Type = f.PickRandom<CookBook.Domain.Enums.DishType>()
             }))
             .RuleFor(r => r.UserId, _ => user.Id);
     }

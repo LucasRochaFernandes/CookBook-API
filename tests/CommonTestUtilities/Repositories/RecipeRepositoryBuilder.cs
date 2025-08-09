@@ -1,7 +1,7 @@
 ﻿using Moq;
-using RevenuesBook.Domain.Dtos;
-using RevenuesBook.Domain.Entities;
-using RevenuesBook.Domain.IRepositories;
+using CookBook.Domain.Dtos;
+using CookBook.Domain.Entities;
+using CookBook.Domain.IRepositories;
 
 namespace CommonTestUtilities.Repositories;
 public class RecipeRepositoryBuilder
