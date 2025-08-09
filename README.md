@@ -1,20 +1,19 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+﻿# RevenuesBook API
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+A simple and powerful API to manage your cooking recipes. Create, edit, filter, and delete your recipes in an organized way.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+---
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+► **Features**
+- **Users:** Create your account and log in securely.
+- **Recipes:** Manage your recipes with title, ingredients, preparation steps, and more.
+- **Flexibility:** Add preparation time, difficulty level, and even an image for each recipe.
+- **Filters:** Easily find the recipes you are looking for.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+---
+
+► **Technologies Used**
+- **Backend:** .NET 8 / ASP.NET Core
+- **Database:** Support for SQL Server and MySQL
+- **Testing:** Unit and integration tests to ensure quality.
+- **Authentication:** Security with JWT Tokens.

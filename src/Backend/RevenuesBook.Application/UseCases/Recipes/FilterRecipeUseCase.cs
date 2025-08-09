@@ -8,42 +8,42 @@ using RevenuesBook.Domain.Services.LoggedUser;
 using RevenuesBook.Exceptions.ExceptionsBase;
 
 namespace RevenuesBook.Application.UseCases.Recipes;
-public class RegisterRecipeUseCase : IRegisterRecipeUseCase
+
+public class FilterRecipeUseCase : IFilterRecipeUseCase
 {
     private readonly IRecipeRepository _recipeRepository;
     private readonly IMapper _mapper;
     private readonly ILoggedUser _loggedUser;
-    public RegisterRecipeUseCase(IRecipeRepository recipeRepository, IMapper mapper, ILoggedUser loggedUser)
+
+    public FilterRecipeUseCase(IRecipeRepository recipeRepository, IMapper mapper, ILoggedUser loggedUser)
     {
         _recipeRepository = recipeRepository;
         _mapper = mapper;
         _loggedUser = loggedUser;
     }
 
-    public async Task<RegisterRecipeResponse> Execute(RecipeRequest request)
+    public async Task<RecipeFilterResponse> Execute(RecipeFilterRequest request)
     {
         Validate(request);
         var loggedUser = await _loggedUser.User();
-        var recipe = _mapper.Map<Domain.Entities.Recipe>(request);
-        recipe.UserId = loggedUser.Id;
-        var instructions = request.Instructions.OrderBy(i => i.Step).ToList();
-        for (var index = 0; index < instructions.Count; index++)
-        {
-            instructions[index].Step = index + 1;
-        }
-        recipe.Instructions = _mapper.Map<IList<Domain.Entities.Instruction>>(instructions);
-        var recipeId = await _recipeRepository.Create(recipe);
-        await _recipeRepository.Commit();
-        return new RegisterRecipeResponse
-        {
-            RecipeId = recipeId,
-        };
 
+        var filters = new Domain.Dtos.FilterRecipeDto
+        {
+            RecipeTitle_Ingredient = request.RecipeTitle_Ingredient,
+            CookingTimes = request.CookingTimes.Distinct().Select(c => (Domain.Enums.CookingTime)c).ToList(),
+            Difficulties = request.Difficulties.Distinct().Select(c => (Domain.Enums.Difficulty)c).ToList(),
+            DishTypes = request.DishTypes.Distinct().Select(c => (Domain.Enums.DishType)c).ToList()
+        };
+        var recipes = await _recipeRepository.Filter(loggedUser, filters);
+        return new RecipeFilterResponse
+        {
+            Recipes = _mapper.Map<IList<RecipeShortResponse>>(recipes)
+        };
     }
 
-    private void Validate(RecipeRequest request)
+    private static void Validate(RecipeFilterRequest request)
     {
-        var validator = new RecipeValidator();
+        var validator = new RecipeFilterValidator();
         var result = validator.Validate(request);
         if (result.IsValid is false)
         {

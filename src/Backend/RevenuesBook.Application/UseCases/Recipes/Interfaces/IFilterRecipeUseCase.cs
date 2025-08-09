@@ -2,7 +2,7 @@
 using RevenuesBook.Communication.Responses;
 
 namespace RevenuesBook.Application.UseCases.Recipes.Interfaces;
-public interface IRegisterRecipeUseCase
+public interface IFilterRecipeUseCase
 {
-    public Task<RegisterRecipeResponse> Execute(RecipeRequest request);
+    public Task<RecipeFilterResponse> Execute(RecipeFilterRequest request);
 }

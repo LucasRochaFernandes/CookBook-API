@@ -32,6 +32,17 @@ public class AutoMapping : Profile
     private void DomainToResponse()
     {
         CreateMap<User, UserProfileResponse>();
-        CreateMap<Recipe, RecipeResponse>();
+        CreateMap<Recipe, RegisterRecipeResponse>()
+            .ForMember(dest => dest.RecipeId, opt => opt.MapFrom(src => src.Id));
+
+        CreateMap<Recipe, RecipeResponse>()
+            .ForMember(dest => dest.DishTypes, opt => opt.MapFrom(src => src.DishTypes.Select(d => d.Type)));
+
+        CreateMap<Ingredient, IngredientResponse>();
+        CreateMap<Instruction, InstructionResponse>();
+
+        CreateMap<Recipe, RecipeShortResponse>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Title))
+            .ForMember(dest => dest.AmountIngredients, opt => opt.MapFrom(src => src.Ingredients.Count));
     }
 }
