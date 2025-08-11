@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CookBook.API.Attributes;
+﻿using CookBook.API.Attributes;
 using CookBook.Application.UseCases.Recipes.Interfaces;
 using CookBook.Communication.Requests;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CookBook.API.Controllers;
 
@@ -41,6 +41,25 @@ public class RecipeController : ControllerBase
         var result = await useCase.Execute(id);
         return Ok(result);
     }
-
-
+    [HttpDelete]
+    [Route("{id}")]
+    public async Task<IActionResult> Delete(
+        [FromServices] IDeleteRecipeUseCase useCase,
+        [FromRoute] Guid id
+        )
+    {
+        await useCase.Execute(id);
+        return NoContent();
+    }
+    [HttpPut]
+    [Route("{id}")]
+    public async Task<IActionResult> Update(
+        [FromServices] IUpdateRecipeUseCase useCase,
+        [FromRoute] Guid id,
+        [FromBody] RecipeRequest request
+        )
+    {
+        await useCase.Execute(id, request);
+        return NoContent();
+    }
 }

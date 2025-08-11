@@ -40,7 +40,6 @@ public class AutoMapping : Profile
 
         CreateMap<Ingredient, IngredientResponse>();
         CreateMap<Instruction, InstructionResponse>();
-
         CreateMap<Recipe, RecipeShortResponse>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Title))
             .ForMember(dest => dest.AmountIngredients, opt => opt.MapFrom(src => src.Ingredients.Count));

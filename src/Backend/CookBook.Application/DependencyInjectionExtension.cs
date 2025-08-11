@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using CookBook.Application.UseCases.Dashboard;
+using CookBook.Application.UseCases.Dashboard.Interfaces;
 using CookBook.Application.UseCases.Login;
 using CookBook.Application.UseCases.Login.Interfaces;
 using CookBook.Application.UseCases.Recipes;
 using CookBook.Application.UseCases.Recipes.Interfaces;
 using CookBook.Application.UseCases.User;
 using CookBook.Application.UseCases.User.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CookBook.Application;
 public static class DependencyInjectionExtension
@@ -20,6 +22,8 @@ public static class DependencyInjectionExtension
         services.AddScoped<IRegisterRecipeUseCase, RegisterRecipeUseCase>();
         services.AddScoped<IFilterRecipeUseCase, FilterRecipeUseCase>();
         services.AddScoped<IGetRecipeByIdUseCase, GetRecipeByIdUseCase>();
-
+        services.AddScoped<IDeleteRecipeUseCase, DeleteRecipeUseCase>();
+        services.AddScoped<IUpdateRecipeUseCase, UpdateRecipeUseCase>();
+        services.AddScoped<IGetDashboardUseCase, GetDashboardUseCase>();
     }
 }

@@ -1,7 +1,7 @@
-﻿using Moq;
-using CookBook.Domain.Dtos;
+﻿using CookBook.Domain.Dtos;
 using CookBook.Domain.Entities;
 using CookBook.Domain.IRepositories;
+using Moq;
 
 namespace CommonTestUtilities.Repositories;
 public class RecipeRepositoryBuilder
@@ -16,6 +16,12 @@ public class RecipeRepositoryBuilder
     {
         _recipeRepositoryMock.Setup(rep => rep.Filter(user, It.IsAny<FilterRecipeDto>()))
             .ReturnsAsync(recipes);
+        return this;
+    }
+    public RecipeRepositoryBuilder GetById(User user, Recipe? recipe)
+    {
+        if (recipe is not null)
+            _recipeRepositoryMock.Setup(repository => repository.GetById(user, recipe.Id)).ReturnsAsync(recipe);
         return this;
     }
     public IRecipeRepository Build()
