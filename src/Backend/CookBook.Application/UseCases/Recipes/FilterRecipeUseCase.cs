@@ -22,7 +22,7 @@ public class FilterRecipeUseCase : IFilterRecipeUseCase
         _loggedUser = loggedUser;
     }
 
-    public async Task<RecipeFilterResponse> Execute(RecipeFilterRequest request)
+    public async Task<RecipesResponse> Execute(RecipeFilterRequest request)
     {
         Validate(request);
         var loggedUser = await _loggedUser.User();
@@ -35,7 +35,7 @@ public class FilterRecipeUseCase : IFilterRecipeUseCase
             DishTypes = request.DishTypes.Distinct().Select(c => (Domain.Enums.DishType)c).ToList()
         };
         var recipes = await _recipeRepository.Filter(loggedUser, filters);
-        return new RecipeFilterResponse
+        return new RecipesResponse
         {
             Recipes = _mapper.Map<IList<RecipeShortResponse>>(recipes)
         };

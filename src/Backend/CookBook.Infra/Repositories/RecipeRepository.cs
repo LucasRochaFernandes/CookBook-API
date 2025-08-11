@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CookBook.Domain.Dtos;
+﻿using CookBook.Domain.Dtos;
 using CookBook.Domain.Entities;
 using CookBook.Domain.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace CookBook.Infra.Repositories;
 public class RecipeRepository : IRecipeRepository
@@ -22,6 +22,12 @@ public class RecipeRepository : IRecipeRepository
     {
         var result = await _appDbContext.Recipes.AddAsync(entityRecipe);
         return result.Entity.Id;
+    }
+
+    public async Task Delete(Guid recipeId)
+    {
+        var recipe = await _appDbContext.Recipes.FindAsync(recipeId);
+        _appDbContext.Recipes.Remove(recipe!);
     }
 
     public async Task<IList<Recipe>> Filter(User user, FilterRecipeDto filtersDto)
@@ -53,14 +59,36 @@ public class RecipeRepository : IRecipeRepository
         return await query.ToListAsync();
     }
 
-    public async Task<Recipe?> GetById(User user, Guid recipeId)
+    public async Task<Recipe?> GetById(User user, Guid recipeId, bool AsNoTracking = true)
     {
-        return await _appDbContext.Recipes
+        if (AsNoTracking is true)
+        {
+            return await _appDbContext.Recipes
             .AsNoTracking()
             .Include(recipe => recipe.Instructions)
             .Include(recipe => recipe.DishTypes)
             .Include(recipe => recipe.Ingredients)
             .FirstOrDefaultAsync(recipe => recipe.UserId.Equals(user.Id) && recipe.Id.Equals(recipeId));
+        }
+        else
+        {
+            return await _appDbContext.Recipes
+            .Include(recipe => recipe.Instructions)
+            .Include(recipe => recipe.DishTypes)
+            .Include(recipe => recipe.Ingredients)
+            .FirstOrDefaultAsync(recipe => recipe.UserId.Equals(user.Id) && recipe.Id.Equals(recipeId));
+        }
+    }
+
+    public async Task<IList<Recipe>> GetForDashboard(User user)
+    {
+        return await _appDbContext.Recipes
+            .AsNoTracking()
+            .Include(recipe => recipe.Instructions)
+            .Where(recipe => recipe.UserId == user.Id)
+            .OrderByDescending(recipe => recipe.CreatedAt)
+            .Take(5)
+            .ToListAsync();
     }
 
     public void Update(Recipe entityUser)

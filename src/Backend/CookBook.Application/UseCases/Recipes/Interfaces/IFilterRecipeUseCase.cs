@@ -4,5 +4,5 @@ using CookBook.Communication.Responses;
 namespace CookBook.Application.UseCases.Recipes.Interfaces;
 public interface IFilterRecipeUseCase
 {
-    public Task<RecipeFilterResponse> Execute(RecipeFilterRequest request);
+    public Task<RecipesResponse> Execute(RecipeFilterRequest request);
 }
