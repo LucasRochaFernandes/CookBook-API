@@ -1,7 +1,7 @@
 ﻿using CookBook.Domain.Enums;
 
 namespace CookBook.Communication.Responses;
-public sealed class RecipeResponse
+public class RecipeResponse
 {
     public string Title { get; set; } = string.Empty;
     public Difficulty? Difficulty { get; set; }
@@ -9,4 +9,5 @@ public sealed class RecipeResponse
     public IList<IngredientResponse> Ingredients { get; set; } = [];
     public IList<InstructionResponse> Instructions { get; set; } = [];
     public IList<DishType> DishTypes { get; set; } = [];
+    public string? ImageUrl { get; set; }
 }

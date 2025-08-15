@@ -1,5 +1,5 @@
 ﻿namespace CookBook.Communication.Responses;
-public sealed class ErrorResponse
+public class ErrorResponse
 {
     public IList<string> Errors { get; set; }
 

@@ -1,5 +1,5 @@
 ﻿namespace CookBook.Communication.Responses;
-public sealed class TokensResponse
+public class TokensResponse
 {
     public string AccessToken { get; set; } = string.Empty;
 }

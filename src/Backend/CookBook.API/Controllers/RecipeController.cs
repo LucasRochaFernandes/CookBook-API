@@ -13,7 +13,7 @@ public class RecipeController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Register(
         [FromServices] IRegisterRecipeUseCase useCase,
-        [FromBody] RecipeRequest request
+        [FromForm] RegisterRecipeFormDataRequest request
         )
     {
         var result = await useCase.Execute(request);
@@ -60,6 +60,26 @@ public class RecipeController : ControllerBase
         )
     {
         await useCase.Execute(id, request);
+        return NoContent();
+    }
+    [HttpPost("generate")]
+    public async Task<IActionResult> Generate(
+        [FromServices] IGenerateRecipeUseCase useCase,
+        [FromBody] GenerateRecipeRequest request
+        )
+    {
+        var response = await useCase.Execute(request);
+        return Ok(response);
+    }
+    [HttpPut]
+    [Route("image/{id}")]
+    public async Task<IActionResult> UpdateImage(
+        [FromServices] IAddUpdateImageCoverUseCase useCase,
+        [FromRoute] Guid id,
+        IFormFile file
+        )
+    {
+        await useCase.Execute(id, file);
         return NoContent();
     }
 }

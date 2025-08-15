@@ -1,5 +1,5 @@
 ﻿namespace CookBook.Communication.Responses;
-public sealed class RecipesResponse
+public class RecipesResponse
 {
     public IList<RecipeShortResponse> Recipes { get; set; } = [];
 }

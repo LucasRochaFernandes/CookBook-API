@@ -19,7 +19,7 @@ public class AutoMapping : Profile
 
         CreateMap<RequestInstruction, Instruction>();
 
-        CreateMap<RecipeRequest, Recipe>()
+        CreateMap<RegisterRecipeFormDataRequest, Recipe>()
             .ForMember(dest => dest.Instructions, opt => opt.Ignore())
             .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src =>
                 src.Ingredients.Select(item => new Ingredient { Item = item })))
