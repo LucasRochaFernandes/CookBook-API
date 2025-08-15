@@ -59,7 +59,7 @@ public class RecipeRepository : IRecipeRepository
         return await query.ToListAsync();
     }
 
-    public async Task<Recipe?> GetById(User user, Guid recipeId, bool AsNoTracking = true)
+    public async Task<Recipe?> GetById(User user, Guid recipeId, bool AsNoTracking = true, CancellationToken cancellationToken = default)
     {
         if (AsNoTracking is true)
         {

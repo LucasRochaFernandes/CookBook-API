@@ -1,7 +1,7 @@
 ﻿using CookBook.Domain.Enums;
 
 namespace CookBook.Communication.Requests;
-public sealed class RecipeRequest
+public class RecipeRequest
 {
     public string Title { get; set; } = string.Empty;
     public CookingTime? CookingTime { get; set; }

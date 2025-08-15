@@ -21,7 +21,12 @@ public class RecipeRepositoryBuilder
     public RecipeRepositoryBuilder GetById(User user, Recipe? recipe)
     {
         if (recipe is not null)
-            _recipeRepositoryMock.Setup(repository => repository.GetById(user, recipe.Id)).ReturnsAsync(recipe);
+        {
+            _recipeRepositoryMock
+                .Setup(repository => repository.GetById(user, recipe.Id, true, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(recipe);
+        }
+
         return this;
     }
     public IRecipeRepository Build()

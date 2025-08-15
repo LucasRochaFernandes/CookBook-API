@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using CookBook.Communication.Responses;
+﻿using CookBook.Communication.Responses;
 using CookBook.Exceptions;
 using CookBook.Exceptions.ExceptionsBase;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 
 namespace CookBook.API.Filters;

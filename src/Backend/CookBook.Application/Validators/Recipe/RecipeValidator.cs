@@ -1,6 +1,6 @@
-﻿using FluentValidation;
-using CookBook.Communication.Requests;
+﻿using CookBook.Communication.Requests;
 using CookBook.Exceptions;
+using FluentValidation;
 
 namespace CookBook.Application.Validators.Recipe;
 public class RecipeValidator : AbstractValidator<RecipeRequest>

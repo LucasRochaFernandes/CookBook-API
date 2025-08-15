@@ -1,5 +1,5 @@
 ﻿namespace CookBook.Communication.Requests;
-public sealed class RegisterUserRequest
+public class RegisterUserRequest
 {
     public string Name { get; set; }
     public string Email { get; set; }

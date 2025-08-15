@@ -1,5 +1,5 @@
 ﻿namespace CookBook.Communication.Responses;
-public sealed class RecipeShortResponse
+public class RecipeShortResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
