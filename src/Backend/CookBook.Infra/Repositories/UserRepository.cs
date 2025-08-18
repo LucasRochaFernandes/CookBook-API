@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CookBook.Domain.Entities;
+﻿using CookBook.Domain.Entities;
 using CookBook.Domain.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CookBook.Infra.Repositories;
@@ -39,5 +39,15 @@ public class UserRepository : IUserRepository
     {
         entityUser.UpdatedAt = DateTime.UtcNow;
         _appDbContext.Users.Update(entityUser);
+    }
+
+    public async Task Delete(Guid userId)
+    {
+        var user = await _appDbContext.Users.FirstOrDefaultAsync(usr => usr.Id.Equals(userId));
+        if (user is null)
+            return;
+        var recipes = _appDbContext.Recipes.Where(recipe => recipe.UserId.Equals(userId));
+        _appDbContext.Recipes.RemoveRange(recipes);
+        _appDbContext.Users.Remove(user);
     }
 }

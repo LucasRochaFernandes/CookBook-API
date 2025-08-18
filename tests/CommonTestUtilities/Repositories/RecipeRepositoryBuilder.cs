@@ -1,4 +1,5 @@
-﻿using CookBook.Domain.Dtos;
+﻿using Bogus;
+using CookBook.Domain.Dtos;
 using CookBook.Domain.Entities;
 using CookBook.Domain.IRepositories;
 using Moq;
@@ -29,6 +30,12 @@ public class RecipeRepositoryBuilder
 
         return this;
     }
+    public RecipeRepositoryBuilder GetForDashboard(User user, IList<Recipe> recipes)
+    {
+        _recipeRepositoryMock.Setup(recipeRepository => recipeRepository.GetForDashboard(user)).ReturnsAsync(recipes);
+        return this;
+    }
+
     public IRecipeRepository Build()
     {
         return _recipeRepositoryMock.Object;

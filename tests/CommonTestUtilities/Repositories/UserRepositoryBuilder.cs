@@ -1,6 +1,6 @@
-﻿using Moq;
-using CookBook.Domain.Entities;
+﻿using CookBook.Domain.Entities;
 using CookBook.Domain.IRepositories;
+using Moq;
 using System.Linq.Expressions;
 
 namespace CommonTestUtilities.Repositories;
@@ -18,7 +18,7 @@ public class UserRepositoryBuilder
         _userRepositoryMock
             .Setup(repo => repo.FindBy(
                 It.IsAny<Expression<Func<User, bool>>>(),
-                false
+                It.IsAny<bool>()
             ))
             .ReturnsAsync((Expression<Func<User, bool>> predicate, bool _) =>
             {

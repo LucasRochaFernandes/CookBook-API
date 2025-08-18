@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using CookBook.Application.UseCases.User.Interfaces;
 using CookBook.Application.Validators.User;
 using CookBook.Communication.Requests;
@@ -9,6 +8,7 @@ using CookBook.Domain.Security.Cryptography;
 using CookBook.Domain.Security.Tokens;
 using CookBook.Exceptions;
 using CookBook.Exceptions.ExceptionsBase;
+using FluentValidation.Results;
 
 namespace CookBook.Application.UseCases.User;
 public class RegisterUserUseCase : IRegisterUserUseCase
@@ -51,7 +51,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         var validator = new RegisterUserValidator();
         var result = validator.Validate(request);
 
-        var emailAlreadyExists = await _userRepository.FindBy(user => user.Email.Equals(request.Email));
+        var emailAlreadyExists = await _userRepository.FindBy(user => user.Email.Equals(request.Email), true);
         if (emailAlreadyExists is not null)
         {
             result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.EMAIL_ALREADY_EXISTS));

@@ -12,7 +12,8 @@ public class Version0000002 : MigrationBase
             .WithColumn("CookingTime").AsInt32().Nullable()
             .WithColumn("Difficulty").AsInt32().Nullable()
             .WithColumn("UserId").AsGuid().NotNullable().ForeignKey("FK_Recipe_User_Id", "Users", "Id")
-            .WithColumn("CreatedAt").AsDateTime().NotNullable(); 
+            .WithColumn("CreatedAt").AsDateTime().NotNullable();
+
 
         CreateTable("Ingredients")
             .WithColumn("Item").AsString().NotNullable()

@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.IdentityModel.Tokens;
-using CookBook.Communication.Responses;
+﻿using CookBook.Communication.Responses;
 using CookBook.Domain.IRepositories;
 using CookBook.Domain.Security.Tokens;
 using CookBook.Exceptions;
 using CookBook.Exceptions.ExceptionsBase;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CookBook.API.Filters;
 
@@ -27,9 +27,9 @@ public class AuthenticatedUserFilter : IAsyncAuthorizationFilter
             var token = TokenOnRequest(context);
             var userId = _accessTokenValidator.ValidateAndGetUserId(token);
             var user = await _userRepository.FindBy(user => user.Id.Equals(userId), true);
-            if (user is null)
+            if (user is null || user.Active is false)
             {
-                throw new AppException(ResourceMessagesException.USER_WITHOUT_ACCESS_PERMISSION);
+                throw new UnauthorizedException();
             }
         }
         catch (SecurityTokenExpiredException)
@@ -39,7 +39,7 @@ public class AuthenticatedUserFilter : IAsyncAuthorizationFilter
                 isTokenExpired = true
             });
         }
-        catch (AppException ex)
+        catch (UnauthorizedException ex)
         {
             context.Result = new UnauthorizedObjectResult(new ErrorResponse(ex.Message));
         }

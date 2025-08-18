@@ -18,4 +18,16 @@
     <ProjectReference Include="..\..\src\Shared\CookBook.Communication\CookBook.Communication.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Files\FileJpg.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\FilePng.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\FileTxt.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

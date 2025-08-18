@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using CookBook.Application.Extensions;
 using CookBook.Application.UseCases.Recipes.Interfaces;
 using CookBook.Application.Validators.Recipe;
 using CookBook.Communication.Requests;
 using CookBook.Communication.Responses;
 using CookBook.Domain.IRepositories;
 using CookBook.Domain.Services.LoggedUser;
+using CookBook.Domain.Services.Storage;
 using CookBook.Exceptions.ExceptionsBase;
 
 namespace CookBook.Application.UseCases.Recipes;
@@ -14,12 +16,14 @@ public class FilterRecipeUseCase : IFilterRecipeUseCase
     private readonly IRecipeRepository _recipeRepository;
     private readonly IMapper _mapper;
     private readonly ILoggedUser _loggedUser;
+    private readonly IBlobStorageService _blobStorageService;
 
-    public FilterRecipeUseCase(IRecipeRepository recipeRepository, IMapper mapper, ILoggedUser loggedUser)
+    public FilterRecipeUseCase(IRecipeRepository recipeRepository, IMapper mapper, ILoggedUser loggedUser, IBlobStorageService blobStorageService)
     {
         _recipeRepository = recipeRepository;
         _mapper = mapper;
         _loggedUser = loggedUser;
+        _blobStorageService = blobStorageService;
     }
 
     public async Task<RecipesResponse> Execute(RecipeFilterRequest request)
@@ -37,7 +41,7 @@ public class FilterRecipeUseCase : IFilterRecipeUseCase
         var recipes = await _recipeRepository.Filter(loggedUser, filters);
         return new RecipesResponse
         {
-            Recipes = _mapper.Map<IList<RecipeShortResponse>>(recipes)
+            Recipes = await recipes.MapToShortRecipe(loggedUser, _blobStorageService, _mapper)
         };
     }
 
