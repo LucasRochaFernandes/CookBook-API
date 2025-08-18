@@ -1,11 +1,11 @@
-﻿using FluentValidation.Results;
-using CookBook.Application.UseCases.User.Interfaces;
+﻿using CookBook.Application.UseCases.User.Interfaces;
 using CookBook.Application.Validators.User;
 using CookBook.Communication.Requests;
 using CookBook.Domain.IRepositories;
 using CookBook.Domain.Services.LoggedUser;
 using CookBook.Exceptions;
 using CookBook.Exceptions.ExceptionsBase;
+using FluentValidation.Results;
 
 namespace CookBook.Application.UseCases.User;
 public class UpdateUserUseCase : IUpdateUserUseCase
@@ -36,7 +36,7 @@ public class UpdateUserUseCase : IUpdateUserUseCase
 
         if (currentEmail.Equals(request.Email) is false)
         {
-            var emailAlreadyExists = await _userRepository.FindBy(user => user.Email.Equals(request.Email));
+            var emailAlreadyExists = await _userRepository.FindBy(user => user.Email.Equals(request.Email), true);
             if (emailAlreadyExists is not null)
             {
                 result.Errors.Add(new ValidationFailure("email", ResourceMessagesException.EMAIL_ALREADY_EXISTS));

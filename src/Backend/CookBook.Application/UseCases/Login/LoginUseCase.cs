@@ -21,8 +21,8 @@ public class LoginUseCase : ILoginUseCase
 
     public async Task<TokensResponse> Execute(LoginRequest request)
     {
-        var user = await _userRepository.FindBy(user => user.Email.Equals(request.Email));
-        if (user is null)
+        var user = await _userRepository.FindBy(user => user.Email.Equals(request.Email), true);
+        if (user is null || user.Active is false)
         {
             throw new UnauthorizedException();
         }

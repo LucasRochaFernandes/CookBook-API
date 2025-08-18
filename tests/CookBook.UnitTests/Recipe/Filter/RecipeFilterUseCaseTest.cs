@@ -1,4 +1,5 @@
-﻿using CommonTestUtilities.Entities;
+﻿using CommonTestUtilities.BlobStorage;
+using CommonTestUtilities.Entities;
 using CommonTestUtilities.LoggedUser;
 using CommonTestUtilities.Mapper;
 using CommonTestUtilities.Repositories;
@@ -17,8 +18,8 @@ public class RecipeFilterUseCaseTest
         var mapper = AutoMapperBuilder.Build();
         var recipes = RecipeBuilder.Collection(user);
         var recipeRepository = new RecipeRepositoryBuilder().Filter(user, recipes).Build();
-
-        var useCase = new FilterRecipeUseCase(recipeRepository, mapper, loggedUser);
+        var blobStorageService = new BlobStorageServiceBuilder().GetFileUrl(user, recipes).Build();
+        var useCase = new FilterRecipeUseCase(recipeRepository, mapper, loggedUser, blobStorageService);
 
         var result = await useCase.Execute(request);
 

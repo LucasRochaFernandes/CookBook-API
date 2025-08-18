@@ -1,4 +1,4 @@
-using Microsoft.OpenApi.Models;
+using CookBook.API.BackgroundServices;
 using CookBook.API.Converters;
 using CookBook.API.Filters;
 using CookBook.API.Middlewares;
@@ -9,6 +9,8 @@ using CookBook.Domain.Security.Tokens;
 using CookBook.Infra;
 using CookBook.Infra.Extensions;
 using CookBook.Infra.Migrations;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +60,12 @@ builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
 
 builder.Services.AddHttpContextAccessor();
 
+if (builder.Configuration.IsTestEnvironment() is false)
+{
+    builder.Services.AddHostedService<DeleteUserService>();
+    AddGoogleAuthentication();
+}
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -87,6 +95,20 @@ void MigrateDatabase()
     var connectionString = builder.Configuration.GetAppConnectionString();
     var serviceProvider = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider;
     DatabaseMigration.Migrate(connectionString, serviceProvider);
+}
+
+void AddGoogleAuthentication()
+{
+    var clientId = builder.Configuration.GetValue<string>("Settings:Google:ClientId")!;
+    var clientSecret = builder.Configuration.GetValue<string>("Settings:Google:ClientSecret")!;
+    builder.Services.AddAuthentication(config =>
+    {
+        config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    }).AddCookie().AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = clientId;
+        googleOptions.ClientSecret = clientSecret;
+    });
 }
 
 public partial class Program

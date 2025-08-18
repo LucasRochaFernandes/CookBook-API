@@ -1,9 +1,10 @@
-﻿using CommonTestUtilities.Entities;
+﻿using CommonTestUtilities.BlobStorage;
+using CommonTestUtilities.Entities;
+using CookBook.Infra;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using CookBook.Infra;
 
 namespace CookBook.IntegrationTests;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
@@ -21,6 +22,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
                 var provider = services.AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
 
+                var blobStorage = new BlobStorageServiceBuilder().Build();
+                services.AddScoped(option => blobStorage);
 
                 services.AddDbContext<AppDbContext>(options =>
                 {

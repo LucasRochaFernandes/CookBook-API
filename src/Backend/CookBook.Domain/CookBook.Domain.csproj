@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Services\MailSender\Templates\SendCodeResetPassword.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Services\MailSender\Templates\SendCodeResetPassword.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Services\OpenAI\Resource1.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

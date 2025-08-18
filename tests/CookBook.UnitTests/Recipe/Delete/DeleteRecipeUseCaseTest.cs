@@ -1,4 +1,5 @@
-﻿using CommonTestUtilities.Entities;
+﻿using CommonTestUtilities.BlobStorage;
+using CommonTestUtilities.Entities;
 using CommonTestUtilities.LoggedUser;
 using CommonTestUtilities.Repositories;
 using CookBook.Application.UseCases.Recipes;
@@ -13,7 +14,9 @@ public class DeleteRecipeUseCaseTest
         var loggedUser = LoggedUserBuilder.Build(user);
         var recipe = RecipeBuilder.Build(user);
         var recipeRepository = new RecipeRepositoryBuilder().GetById(user, recipe).Build();
-        var useCase = new DeleteRecipeUseCase(loggedUser, recipeRepository);
+        var blobStorageService = new BlobStorageServiceBuilder().GetFileUrl(user, recipe.ImageIdentifier).Build();
+
+        var useCase = new DeleteRecipeUseCase(loggedUser, recipeRepository, blobStorageService);
 
         Func<Task> act = async () => { await useCase.Execute(recipe.Id); };
 

@@ -1,9 +1,13 @@
-﻿using Azure.Storage.Blobs;
+﻿using Azure.Messaging.ServiceBus;
+using Azure.Storage.Blobs;
 using CookBook.Domain.IRepositories;
 using CookBook.Domain.Security.Cryptography;
 using CookBook.Domain.Security.Tokens;
 using CookBook.Domain.Services.LoggedUser;
+using CookBook.Domain.Services.MailSender;
+using CookBook.Domain.Services.MailSender.Models;
 using CookBook.Domain.Services.OpenAI;
+using CookBook.Domain.Services.ServiceBus;
 using CookBook.Domain.Services.Storage;
 using CookBook.Domain.ValueObjects;
 using CookBook.Infra.Extensions;
@@ -12,7 +16,9 @@ using CookBook.Infra.Security.Cryptography;
 using CookBook.Infra.Security.Tokens.Access.Generator;
 using CookBook.Infra.Security.Tokens.Access.Validator;
 using CookBook.Infra.Services.LoggedUser;
+using CookBook.Infra.Services.MailSender;
 using CookBook.Infra.Services.OpenAI;
+using CookBook.Infra.Services.ServiceBus;
 using CookBook.Infra.Services.Storage;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Configuration;
@@ -29,10 +35,13 @@ public static class DependencyInjectionExtension
         services.AddScoped<IPasswordEncripter>(opt => new Sha512Encripter(appendToPasswordSetting!));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRecipeRepository, RecipeRepository>();
+        services.AddScoped<ICodeToPerformActionRepository, CodeToPerformActionRepository>();
         services.AddScoped<ILoggedUser, LoggedUser>();
         AddTokens(services, configuration);
         AddOpenAI(services, configuration);
         AddAzureStorage(services, configuration);
+        AddQueue(services, configuration);
+        AddMailSender(services, configuration);
         if (configuration.IsTestEnvironment() is true)
         {
             return;
@@ -62,13 +71,49 @@ public static class DependencyInjectionExtension
     }
     private static void AddOpenAI(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IGenerateRecipeAI, ChatGPTService>();
         var apiKey = configuration.GetValue<string>("Settings:OpenAI:ApiKey");
-        services.AddScoped(c => new ChatClient(AppRuleConstants.CHAT_MODEL, apiKey));
+        if (string.IsNullOrEmpty(apiKey) is false)
+        {
+            services.AddScoped<IGenerateRecipeAI, ChatGPTService>();
+            services.AddScoped(c => new ChatClient(AppRuleConstants.CHAT_MODEL, apiKey));
+        }
     }
     private static void AddAzureStorage(IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetValue<string>("Settings:BlobStorage:Azure");
-        services.AddScoped<IBlobStorageService>(c => new AzureStorageService(new BlobServiceClient(connectionString)));
+        if (string.IsNullOrEmpty(connectionString) is false)
+        {
+            services.AddScoped<IBlobStorageService>(c => new AzureStorageService(new BlobServiceClient(connectionString)));
+        }
+    }
+    private static void AddQueue(IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetValue<string>("Settings:ServiceBus:DeleteUserAccount");
+
+        if (string.IsNullOrEmpty(connectionString) is true)
+            return;
+
+        var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
+        {
+            TransportType = ServiceBusTransportType.AmqpWebSockets
+        });
+
+        string queueName = "user";
+        var deleteQueue = new DeleteUserQueue(client.CreateSender(queueName));
+
+        var deleteUserProcessor = new DeleteUserProcessor(client.CreateProcessor(queueName, new ServiceBusProcessorOptions
+        {
+            MaxConcurrentCalls = 1
+        }));
+        services.AddSingleton(deleteUserProcessor);
+
+        services.AddScoped<IDeleteUserQueue>(opt => deleteQueue);
+    }
+    private static void AddMailSender(IServiceCollection services, IConfiguration configuration)
+    {
+        var mailSettings = configuration.GetSection("Settings:MailSender").Get<MailSettings>();
+        if (mailSettings is null)
+            return;
+        services.AddScoped<IMailSenderService>(opt => new MailSenderService(mailSettings));
     }
 }

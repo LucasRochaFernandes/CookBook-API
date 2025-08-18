@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CookBook.API.Attributes;
+﻿using CookBook.API.Attributes;
 using CookBook.Application.UseCases.User.Interfaces;
 using CookBook.Communication.Requests;
 using CookBook.Communication.Responses;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CookBook.API.Controllers;
 
@@ -53,6 +53,14 @@ public class UserController : ControllerBase
         )
     {
         await useCase.Execute(body);
+        return NoContent();
+    }
+
+    [HttpDelete]
+    [AuthenticatedUser]
+    public async Task<IActionResult> Delete([FromServices] IRequestDeleteUserUseCase useCase)
+    {
+        await useCase.Execute();
         return NoContent();
     }
 }

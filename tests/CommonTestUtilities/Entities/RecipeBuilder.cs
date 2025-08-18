@@ -40,6 +40,7 @@ public class RecipeBuilder
                 Id = Guid.NewGuid(),
                 Type = f.PickRandom<CookBook.Domain.Enums.DishType>()
             }))
-            .RuleFor(r => r.UserId, _ => user.Id);
+            .RuleFor(r => r.UserId, _ => user.Id)
+            .RuleFor(r => r.ImageIdentifier, _ => $"{Guid.NewGuid()}.png");
     }
 }
