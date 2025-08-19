@@ -1,9 +1,8 @@
 ﻿using CookBook.Application.UseCases.Dashboard.Interfaces;
-using CookBook.Application.UseCases.Recipes.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookBook.API.Controllers;
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class DashboardController : ControllerBase
 {

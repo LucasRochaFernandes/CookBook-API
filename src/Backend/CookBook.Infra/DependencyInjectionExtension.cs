@@ -15,6 +15,7 @@ using CookBook.Infra.Repositories;
 using CookBook.Infra.Security.Cryptography;
 using CookBook.Infra.Security.Tokens.Access.Generator;
 using CookBook.Infra.Security.Tokens.Access.Validator;
+using CookBook.Infra.Security.Tokens.Refresh;
 using CookBook.Infra.Services.LoggedUser;
 using CookBook.Infra.Services.MailSender;
 using CookBook.Infra.Services.OpenAI;
@@ -31,12 +32,13 @@ public static class DependencyInjectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var appendToPasswordSetting = configuration.GetValue<string>("Settings:Password:AdditionalKey");
-        services.AddScoped<IPasswordEncripter>(opt => new Sha512Encripter(appendToPasswordSetting!));
+        services.AddScoped<IPasswordEncripter, BCryptNet>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRecipeRepository, RecipeRepository>();
+        services.AddScoped<ITokenRepository, TokenRepository>();
         services.AddScoped<ICodeToPerformActionRepository, CodeToPerformActionRepository>();
         services.AddScoped<ILoggedUser, LoggedUser>();
+        services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
         AddTokens(services, configuration);
         AddOpenAI(services, configuration);
         AddAzureStorage(services, configuration);

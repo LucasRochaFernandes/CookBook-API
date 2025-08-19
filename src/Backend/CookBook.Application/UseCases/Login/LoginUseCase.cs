@@ -12,11 +12,16 @@ public class LoginUseCase : ILoginUseCase
     private readonly IUserRepository _userRepository;
     private readonly IPasswordEncripter _passwordEncripter;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
-    public LoginUseCase(IUserRepository userRepository, IPasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator)
+    private readonly IRefreshTokenGenerator _refreshTokenGenerator;
+    private readonly ITokenRepository _tokenRepository;
+
+    public LoginUseCase(IUserRepository userRepository, IPasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator, IRefreshTokenGenerator refreshTokenGenerator, ITokenRepository tokenRepository)
     {
         _userRepository = userRepository;
         _passwordEncripter = passwordEncripter;
         _accessTokenGenerator = accessTokenGenerator;
+        _refreshTokenGenerator = refreshTokenGenerator;
+        _tokenRepository = tokenRepository;
     }
 
     public async Task<TokensResponse> Execute(LoginRequest request)
@@ -26,14 +31,27 @@ public class LoginUseCase : ILoginUseCase
         {
             throw new UnauthorizedException();
         }
-        var encryptedPassword = _passwordEncripter.Encrypt(request.Password);
-        if (user.Password != encryptedPassword)
+        if (_passwordEncripter.IsValid(request.Password, user.Password) is false)
         {
             throw new UnauthorizedException();
         }
+        var refreshToken = await CreateAndSaveRefreshToken(user);
         return new TokensResponse
         {
-            AccessToken = _accessTokenGenerator.Generate(user.Id)
+            AccessToken = _accessTokenGenerator.Generate(user.Id),
+            RefreshToken = refreshToken
         };
+    }
+
+    private async Task<string> CreateAndSaveRefreshToken(Domain.Entities.User user)
+    {
+        var refreshToken = new Domain.Entities.RefreshToken
+        {
+            UserId = user.Id,
+            Value = _refreshTokenGenerator.Generate()
+        };
+        await _tokenRepository.SaveNewRefreshToken(refreshToken);
+        await _tokenRepository.Commit();
+        return refreshToken.Value;
     }
 }

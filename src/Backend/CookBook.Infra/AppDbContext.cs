@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<CodeToPerformAction> CodeToPerformActions { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     public AppDbContext(IServiceProvider serviceProvider, DbContextOptions<AppDbContext> options)
         : base(options)

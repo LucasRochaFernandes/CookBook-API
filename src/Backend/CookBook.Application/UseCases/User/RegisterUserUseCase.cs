@@ -17,12 +17,16 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IMapper _mapper;
     private readonly IPasswordEncripter _passwordEncripter;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
-    public RegisterUserUseCase(IUserRepository userRepository, IMapper mapper, IPasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator)
+    private readonly IRefreshTokenGenerator _refreshTokenGenerator;
+    private readonly ITokenRepository _tokenRepository;
+    public RegisterUserUseCase(IUserRepository userRepository, IMapper mapper, IPasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator, IRefreshTokenGenerator refreshTokenGenerator, ITokenRepository tokenRepository)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
         _accessTokenGenerator = accessTokenGenerator;
+        _refreshTokenGenerator = refreshTokenGenerator;
+        _tokenRepository = tokenRepository;
     }
 
 
@@ -37,12 +41,15 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         await _userRepository.Commit();
 
+        var refreshToken = await CreateAndSaveRefreshToken(user);
+
         return new RegisterUserResponse
         {
             UserId = result,
             Tokens = new TokensResponse
             {
-                AccessToken = _accessTokenGenerator.Generate(user.Id)
+                AccessToken = _accessTokenGenerator.Generate(user.Id),
+                RefreshToken = refreshToken
             }
         };
     }
@@ -62,5 +69,16 @@ public class RegisterUserUseCase : IRegisterUserUseCase
             var errorMessages = result.Errors.Select(er => er.ErrorMessage).ToList();
             throw new ValidationException(errorMessages);
         }
+    }
+    private async Task<string> CreateAndSaveRefreshToken(Domain.Entities.User user)
+    {
+        var refreshToken = new Domain.Entities.RefreshToken
+        {
+            UserId = user.Id,
+            Value = _refreshTokenGenerator.Generate()
+        };
+        await _tokenRepository.SaveNewRefreshToken(refreshToken);
+        await _tokenRepository.Commit();
+        return refreshToken.Value;
     }
 }

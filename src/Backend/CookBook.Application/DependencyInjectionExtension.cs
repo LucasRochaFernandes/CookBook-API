@@ -4,6 +4,8 @@ using CookBook.Application.UseCases.Login;
 using CookBook.Application.UseCases.Login.Interfaces;
 using CookBook.Application.UseCases.Recipes;
 using CookBook.Application.UseCases.Recipes.Interfaces;
+using CookBook.Application.UseCases.Token;
+using CookBook.Application.UseCases.Token.Interfaces;
 using CookBook.Application.UseCases.User;
 using CookBook.Application.UseCases.User.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -31,5 +33,6 @@ public static class DependencyInjectionExtension
         services.AddScoped<IDeleteUserAccountUseCase, DeleteUserAccountUseCase>();
         services.AddScoped<IExternalLoginUseCase, ExternalLoginUseCase>();
         services.AddScoped<IResetPasswordUseCase, ResetPasswordUseCase>();
+        services.AddScoped<IUseRefreshTokenUseCase, UseRefreshTokenUseCase>();
     }
 }

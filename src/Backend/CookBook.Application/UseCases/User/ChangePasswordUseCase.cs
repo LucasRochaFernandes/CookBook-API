@@ -36,7 +36,7 @@ public class ChangePasswordUseCase : IChangePasswordUseCase
         var validator = new ChangePasswordValidator();
         var result = validator.Validate(request);
         var currentPasswordEncripted = _passwordEncripter.Encrypt(request.CurrentPassword);
-        if (currentPasswordEncripted.Equals(user.Password) is false)
+        if (_passwordEncripter.IsValid(request.NewPassword, currentPasswordEncripted))
         {
             result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceMessagesException.CURRENT_PASSWORD_INVALID));
         }
