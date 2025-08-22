@@ -21,7 +21,9 @@ public class RegisterUserUseCaseTest
         var mapper = AutoMapperBuilder.Build();
         var passwordEncripter = EncripterBuilder.Build();
         var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
-        var useCase = new RegisterUserUseCase(userRepository, mapper, passwordEncripter, accessTokenGenerator);
+        var tokenRepository = new TokenRepositoryBuilder().Build();
+        var refreshTokenGenerator = RefreshTokenGeneratorBuilder.Build();
+        var useCase = new RegisterUserUseCase(userRepository, mapper, passwordEncripter, accessTokenGenerator, refreshTokenGenerator, tokenRepository);
 
         var result = await useCase.Execute(request);
 
@@ -39,13 +41,15 @@ public class RegisterUserUseCaseTest
         var mapper = AutoMapperBuilder.Build();
         var passwordEncripter = EncripterBuilder.Build();
         var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
-        var useCase = new RegisterUserUseCase(userRepository, mapper, passwordEncripter, accessTokenGenerator);
+        var tokenRepository = new TokenRepositoryBuilder().Build();
+        var refreshTokenGenerator = RefreshTokenGeneratorBuilder.Build();
+        var useCase = new RegisterUserUseCase(userRepository, mapper, passwordEncripter, accessTokenGenerator, refreshTokenGenerator, tokenRepository);
 
 
         Func<Task<RegisterUserResponse>> act = async () => await useCase.Execute(request);
 
         var exception = await Assert.ThrowsAsync<ValidationException>(act);
-        Assert.Contains(ResourceMessagesException.EMAIL_ALREADY_EXISTS, exception.Errors);
+        Assert.Contains(ResourceMessagesException.EMAIL_ALREADY_EXISTS, exception.GetErrorMessages());
     }
 
     private static IUserRepository CreateUserRepository(bool FindByReturnsUser = false)

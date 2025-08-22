@@ -16,7 +16,9 @@ public class LoginUseCaseTest
         var passwordEncripter = EncripterBuilder.Build();
         var userRepository = CreateUserRepository(user);
         var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
-        var useCase = new LoginUseCase(userRepository, passwordEncripter, accessTokenGenerator);
+        var refreshTokenGenerator = RefreshTokenGeneratorBuilder.Build();
+        var tokenRepository = new TokenRepositoryBuilder().Build();
+        var useCase = new LoginUseCase(userRepository, passwordEncripter, accessTokenGenerator, refreshTokenGenerator, tokenRepository);
 
         var result =
             await useCase.Execute(new LoginRequest { Email = user.Email, Password = password });

@@ -11,6 +11,6 @@ public class ErrorResponse
     }
     public ErrorResponse(string message)
     {
-        Errors = new List<string> { message };
+        Errors = [message];
     }
 }

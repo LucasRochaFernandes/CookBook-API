@@ -1,7 +1,19 @@
-﻿namespace CookBook.Exceptions.ExceptionsBase;
+﻿using System.Net;
+
+namespace CookBook.Exceptions.ExceptionsBase;
 public class UnauthorizedException : AppException
 {
     public UnauthorizedException() : base(ResourceMessagesException.EMAIL_OR_PASSWORD_INVALID)
     {
+    }
+
+    public override IList<string> GetErrorMessages()
+    {
+        return [Message];
+    }
+
+    public override HttpStatusCode GetHttpStatusCode()
+    {
+        return HttpStatusCode.Unauthorized;
     }
 }

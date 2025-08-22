@@ -54,7 +54,7 @@ public class AuthenticatedUserFilter : IAsyncAuthorizationFilter
         var authentication = context.HttpContext.Request.Headers.Authorization.ToString();
         if (string.IsNullOrEmpty(authentication))
         {
-            throw new AppException(ResourceMessagesException.NO_TOKEN);
+            throw new UnauthorizedException();
         }
         return authentication["Bearer ".Length..].Trim();
     }

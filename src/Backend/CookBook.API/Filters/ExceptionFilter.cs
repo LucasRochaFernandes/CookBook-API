@@ -11,9 +11,9 @@ public class ExceptionFilter : IExceptionFilter
 {
     public void OnException(ExceptionContext context)
     {
-        if (context.Exception is AppException)
+        if (context.Exception is AppException appException)
         {
-            HandleAppException(context);
+            HandleAppException(appException, context);
         }
         else
         {
@@ -21,30 +21,11 @@ public class ExceptionFilter : IExceptionFilter
         }
     }
 
-    private static void HandleAppException(ExceptionContext context)
+    private static void HandleAppException(AppException appException, ExceptionContext context)
     {
-        if (context.Exception is UnauthorizedException)
-        {
-            var exception = (UnauthorizedException)context.Exception;
-            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            context.Result = new UnauthorizedObjectResult(
-                new ErrorResponse(exception.Message));
-        }
-        else if (context.Exception is ValidationException)
-        {
-            var exception = (ValidationException)context.Exception;
-            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            context.Result = new BadRequestObjectResult(
-                new ErrorResponse(exception.Errors));
-        }
-        else if (context.Exception is NotFoundException)
-        {
-            var exception = (NotFoundException)context.Exception;
-            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
-            context.Result = new NotFoundObjectResult(new ErrorResponse(context.Exception.Message));
-        }
+        context.HttpContext.Response.StatusCode = (int)appException.GetHttpStatusCode();
+        context.Result = new ObjectResult(new ErrorResponse(appException.GetErrorMessages()));
     }
-
     private static void HandleUnknownException(ExceptionContext context)
     {
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
